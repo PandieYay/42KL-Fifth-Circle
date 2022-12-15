@@ -41,4 +41,19 @@ int main(void)
         cout << "\nSize : " << test.size();
         cout << "\nTest[0] = " << test[0];
     }
+    /// @brief Testing copy constructor and copy operator
+    {
+        ft::vector<int> g1;
+        for (int i = 7; i <= 10; i++)
+            g1.push_back(i);
+        ft::vector<int> test(g1);
+        cout << "\nSize : " << test.size();
+        cout << "\nTest[0] = " << test[0];
+        ft::vector<int> copyop(5, 10);
+        cout << "\nCopyop Size b4: " << copyop.size();
+        cout << "\nCopyop[0] b4 = " << copyop[0];
+        copyop = test;
+        cout << "\nCopyop Size aft: " << copyop.size();
+        cout << "\nCopyop[0] aft = " << copyop[0];
+    }
 }

@@ -12,8 +12,8 @@ namespace ft
     class vector
     {
     public:
-        typedef Allocator allocator_type;
         typedef T value_type;
+        typedef Allocator allocator_type;
         typedef size_t size_type;
         typedef value_type &reference;
         typedef const value_type &const_reference;
@@ -57,7 +57,35 @@ namespace ft
             _size = size;
             _capacity = size;
         }
-
+        /// @brief Constructs a container with a copy of each of the elements in x, in the same order.
+        vector(const vector &x)
+        {
+            _alloc = x._alloc;
+            _vector = _alloc.allocate(x._size);
+            _capacity = x._size;
+            _size = 0;
+            while (_size < _capacity)
+            {
+                _alloc.construct(_vector + _size, x._vector[_size]);
+                _size++;
+            }
+        }
+        /// @brief Copies all the elements from x into the container.
+        vector &operator=(const vector &x)
+        {
+            for (size_type i = 0; i < _capacity; i++)
+                _alloc.destroy(_vector + i);
+            _alloc.deallocate(_vector, _capacity);
+            _vector = _alloc.allocate(x._size);
+            _capacity = x._size;
+            _size = 0;
+            while (_size < _capacity)
+            {
+                _alloc.construct(_vector + _size, x._vector[_size]);
+                _size++;
+            }
+            return *this;
+        }
         // Destructor
         ~vector()
         {

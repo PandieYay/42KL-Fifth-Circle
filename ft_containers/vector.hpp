@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <iostream>
+#include <type_traits>
 
 namespace ft
 {
@@ -13,6 +14,8 @@ namespace ft
         typedef Allocator allocator_type;
         typedef T value_type;
         typedef size_t size_type;
+        typedef value_type &reference;
+        typedef const value_type &const_reference;
 
     private:
         T *_vector;
@@ -38,11 +41,21 @@ namespace ft
             _size = n;
             _capacity = n;
         }
-        // template <class InputIterator> vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()): _alloc(alloc)
-        // {
-        //     _vector = _alloc.allocate(last - first);
-        //     // std::cout << *(first);
-        // }
+        /// @brief Constructs a container with as many elements as the range [first,last),
+        /// with each element constructed from its corresponding element in that range, in the same order.
+        template <class InputIterator, typename std::enable_if<!std::is_integral<InputIterator>::value, bool>::type = true>
+        vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type()) : _alloc(alloc)
+        {
+            size_type size = last - first;
+            _vector = _alloc.allocate(size);
+            for (size_type i = 0; i < size; i++)
+            {
+                _alloc.construct(_vector + i, *first);
+                first++;
+            }
+            _size = size;
+            _capacity = size;
+        }
 
         // Destructor
         ~vector()
@@ -73,11 +86,11 @@ namespace ft
         {
             return (_size);
         };
-        T operator[](size_type index)
+        reference operator[](size_type index)
         {
             return (_vector[index]);
         };
-        T operator[](size_type index) const
+        const_reference operator[](size_type index) const
         {
             return (_vector[index]);
         };

@@ -1,7 +1,7 @@
 NAME = ./a.out
 SRCS = ./test.cpp
 INC = ./vector.hpp
-FLAGS = -Wall -Wextra -Werror -std=c++98
+FLAGS = -Wall -Wextra -Werror -std=c++11
 
 all: $(NAME)
 

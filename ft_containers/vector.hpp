@@ -4,6 +4,7 @@
 #include <memory>
 #include <iostream>
 #include <type_traits>
+#include "functions.hpp"
 
 namespace ft
 {
@@ -43,8 +44,8 @@ namespace ft
         }
         /// @brief Constructs a container with as many elements as the range [first,last),
         /// with each element constructed from its corresponding element in that range, in the same order.
-        template <class InputIterator, typename std::enable_if<!std::is_integral<InputIterator>::value, bool>::type = true>
-        vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type()) : _alloc(alloc)
+        template <class InputIterator>
+        vector(typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last, const allocator_type &alloc = allocator_type()) : _alloc(alloc)
         {
             size_type size = last - first;
             _vector = _alloc.allocate(size);

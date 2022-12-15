@@ -3,8 +3,8 @@
 
 #include <memory>
 #include <iostream>
-#include <type_traits>
 #include "functions.hpp"
+#include "iterators.hpp"
 
 namespace ft
 {
@@ -17,6 +17,8 @@ namespace ft
         typedef size_t size_type;
         typedef value_type &reference;
         typedef const value_type &const_reference;
+        typedef vecIterator<T> iterator;
+        typedef vecIterator<const T> const_iterator;
 
     private:
         T *_vector;
@@ -93,7 +95,13 @@ namespace ft
                 _alloc.destroy(_vector + i);
             _alloc.deallocate(_vector, _capacity);
         }
-
+        // Iterators
+        iterator begin() { return (iterator(_vector)); };
+        const_iterator begin() const { return (const_iterator(_vector)); };
+        const_iterator cbegin() const { return (const_iterator(_vector)); };
+        iterator end() { return (iterator(_vector+_size)); };
+        const_iterator end() const { return (const_iterator(_vector+_size)); };
+        const_iterator cend() const { return (const_iterator(_vector+_size)); };
         // Functions
         void push_back(const T &val)
         {

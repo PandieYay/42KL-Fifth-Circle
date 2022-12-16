@@ -21,6 +21,7 @@ namespace ft
     template <class T>
     class vecIterator : public ft::iterator<ft::random_access_iterator_tag, T>
     {
+    private:
         int *p;
 
     public:

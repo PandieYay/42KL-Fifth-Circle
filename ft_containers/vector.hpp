@@ -5,6 +5,7 @@
 #include <iostream>
 #include "functions.hpp"
 #include "iterators.hpp"
+#include "reverse_iterator.hpp"
 
 namespace ft
 {
@@ -19,6 +20,8 @@ namespace ft
         typedef const value_type &const_reference;
         typedef vecIterator<T> iterator;
         typedef vecIterator<const T> const_iterator;
+        typedef ft::reverse_iterator<iterator> reverse_iterator;
+        typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
     private:
         T *_vector;
@@ -98,10 +101,12 @@ namespace ft
         // Iterators
         iterator begin() { return (iterator(_vector)); };
         const_iterator begin() const { return (const_iterator(_vector)); };
-        const_iterator cbegin() const { return (const_iterator(_vector)); };
-        iterator end() { return (iterator(_vector+_size)); };
-        const_iterator end() const { return (const_iterator(_vector+_size)); };
-        const_iterator cend() const { return (const_iterator(_vector+_size)); };
+        iterator end() { return (iterator(_vector + _size)); };
+        const_iterator end() const { return (const_iterator(_vector + _size)); };
+        reverse_iterator rbegin() { return (reverse_iterator(iterator(_vector + _size - 1))); };
+        const_reverse_iterator rbegin() const { return (const_reverse_iterator(const_iterator(_vector + _size - 1))); };
+        reverse_iterator rend() { return (reverse_iterator(iterator(_vector - 1))); };
+        const_reverse_iterator rend() const { return (const_reverse_iterator(iterator(_vector - 1))); };
         // Functions
         void push_back(const T &val)
         {

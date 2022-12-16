@@ -1,6 +1,6 @@
 NAME = ./a.out
 SRCS = ./test.cpp
-INC = ./vector.hpp ./functions.hpp iterators.hpp
+INC = ./vector.hpp ./functions.hpp ./iterators.hpp ./reverse_iterator.hpp
 FLAGS = -Wall -Wextra -Werror -std=c++98
 
 all: $(NAME)

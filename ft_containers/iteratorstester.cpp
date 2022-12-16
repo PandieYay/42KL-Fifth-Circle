@@ -11,7 +11,10 @@ int main(void)
     for (int i = 7; i <= 10; i++)
         g1.push_back(i);
     ft::vector<int> copyVec(g1.begin(), g1.end());
-    cout << "\nCopyVec Size aft: " << copyVec.size();
+    cout << "CopyVec Size aft: " << copyVec.size();
     cout << "\nCopyVec[0] aft = " << copyVec[0] << std::endl;
-    cout << g1.end() - g1.begin();
+    cout << g1.end() - g1.begin() << std::endl;
+    cout << *(g1.rbegin()) << std::endl;
+    cout << *(g1.rbegin() + 1) << std::endl;
+    cout << *(g1.rend());
 }

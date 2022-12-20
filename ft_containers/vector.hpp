@@ -98,6 +98,7 @@ namespace ft
                 _alloc.destroy(_vector + i);
             _alloc.deallocate(_vector, _capacity);
         }
+
         // Iterators
         iterator begin() { return (iterator(_vector)); };
         const_iterator begin() const { return (const_iterator(_vector)); };
@@ -107,6 +108,51 @@ namespace ft
         const_reverse_iterator rbegin() const { return (const_reverse_iterator(const_iterator(_vector + _size - 1))); };
         reverse_iterator rend() { return (reverse_iterator(iterator(_vector - 1))); };
         const_reverse_iterator rend() const { return (const_reverse_iterator(iterator(_vector - 1))); };
+
+        // Capacity
+        size_type size() const
+        {
+            return (_size);
+        };
+        size_type max_size() const
+        {
+            return (_alloc.max_size());
+        }
+        size_type capacity() const
+        {
+            return (_capacity);
+        }
+        bool empty() const
+        {
+            if (_size == 0)
+                return (true);
+            return (false);
+        }
+        void reserve(size_type new_cap)
+        {
+            if (new_cap > _capacity)
+            {
+                T *temp = _vector;
+                _vector = _alloc.allocate(_size + 1);
+                for (size_type i = 0; i < _capacity; i++)
+                    _alloc.construct(_vector + i, temp[i]);
+                for (size_type i = 0; i < _capacity; i++)
+                    _alloc.destroy(temp + i);
+                _alloc.deallocate(temp, _capacity);
+                _capacity = new_cap;
+            }
+        }
+
+        // Element Access
+        reference operator[](size_type index)
+        {
+            return (_vector[index]);
+        };
+        const_reference operator[](size_type index) const
+        {
+            return (_vector[index]);
+        };
+
         // Functions
         void push_back(const T &val)
         {
@@ -123,18 +169,6 @@ namespace ft
             }
             _vector[_size] = val;
             _size++;
-        };
-        size_type size() const
-        {
-            return (_size);
-        };
-        reference operator[](size_type index)
-        {
-            return (_vector[index]);
-        };
-        const_reference operator[](size_type index) const
-        {
-            return (_vector[index]);
         };
     };
 }

@@ -11,6 +11,9 @@ $(NAME): ${SRCS} ${INC}
 iterators: ./iteratorstester.cpp ${INC}
 	c++ ${FLAGS} -o ${NAME} ./iteratorstester.cpp
 
+capacity: ./capacitytester.cpp ${INC}
+	c++ ${FLAGS} -o ${NAME} ./capacitytester.cpp
+
 clean:
 	rm -f ${NAME}
 

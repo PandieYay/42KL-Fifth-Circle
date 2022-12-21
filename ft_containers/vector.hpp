@@ -152,6 +152,42 @@ namespace ft
         {
             return (_vector[index]);
         };
+        reference at(size_type pos)
+        {
+            if (pos >= _size)
+                throw std::out_of_range("vector");
+            return (_vector[pos]);
+        }
+        const_reference at(size_type pos) const
+        {
+            if (pos >= _size)
+                throw std::out_of_range("vector");
+            return (_vector[pos]);
+        }
+        reference front()
+        {
+            return (_vector[0]);
+        }
+        reference front() const
+        {
+            return (_vector[0]);
+        }
+        reference back()
+        {
+            return (_vector[_size - 1]);
+        }
+        reference back() const
+        {
+            return (_vector[_size - 1]);
+        }
+        value_type *data()
+        {
+            return (_vector);
+        }
+        const value_type *data() const
+        {
+            return (_vector);
+        }
 
         // Functions
         void push_back(const T &val)

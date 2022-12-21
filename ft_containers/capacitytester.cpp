@@ -7,7 +7,7 @@ using std::cout;
 
 int main(void)
 {
-    std::vector<int> g1;
+    ft::vector<int> g1;
     for (int i = 7; i <= 10; i++)
         g1.push_back(i);
     std::cout << "size: " << g1.size() << "\n";

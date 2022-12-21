@@ -14,6 +14,9 @@ iterators: ./iteratorstester.cpp ${INC}
 capacity: ./capacitytester.cpp ${INC}
 	c++ ${FLAGS} -o ${NAME} ./capacitytester.cpp
 
+modifier: ./modifiertester.cpp ${INC}
+	c++ ${FLAGS} -o ${NAME} ./modifiertester.cpp
+
 clean:
 	rm -f ${NAME}
 

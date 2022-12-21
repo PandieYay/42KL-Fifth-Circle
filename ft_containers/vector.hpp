@@ -133,7 +133,7 @@ namespace ft
             if (new_cap > _capacity)
             {
                 T *temp = _vector;
-                _vector = _alloc.allocate(_size + 1);
+                _vector = _alloc.allocate(new_cap);
                 for (size_type i = 0; i < _capacity; i++)
                     _alloc.construct(_vector + i, temp[i]);
                 for (size_type i = 0; i < _capacity; i++)
@@ -189,7 +189,57 @@ namespace ft
             return (_vector);
         }
 
-        // Functions
+        // Modifiers
+        template <class InputIterator>
+        void assign(typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last)
+        {
+            size_type size = last - first;
+
+            for (size_type i = 0; i < _capacity; i++)
+                _alloc.destroy(_vector + i);
+            if (size > _capacity)
+            {
+                _alloc.deallocate(_vector, _capacity);
+                _vector = _alloc.allocate(size);
+                for (size_type i = 0; i < size; i++)
+                {
+                    _alloc.construct(_vector + i, *first);
+                    first++;
+                }
+                _capacity = size;
+                _size = _capacity;
+            }
+            else
+            {
+                for (size_type i = 0; i < size; i++)
+                {
+                    _alloc.construct(_vector + i, *first);
+                    first++;
+                }
+                _size = size;
+            }
+        }
+        void assign(size_type n, const value_type &val)
+        {
+            for (size_type i = 0; i < _capacity; i++)
+                _alloc.destroy(_vector + i);
+            if (n > _capacity)
+            {
+                _alloc.deallocate(_vector, _capacity);
+                _vector = _alloc.allocate(n);
+                for (size_type i = 0; i < n; i++)
+                    _alloc.construct(_vector + i, val);
+                _capacity = n;
+                _size = _capacity;
+            }
+            else
+            {
+                for (size_type i = 0; i < n; i++)
+                    _alloc.construct(_vector + i, val);
+                _size = n;
+            }
+        }
+
         void push_back(const T &val)
         {
             if (_size + 1 > _capacity)

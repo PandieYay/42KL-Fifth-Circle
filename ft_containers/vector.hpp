@@ -134,7 +134,7 @@ namespace ft
             {
                 T *temp = _vector;
                 _vector = _alloc.allocate(new_cap);
-                for (size_type i = 0; i < _capacity; i++)
+                for (size_type i = 0; i < _size; i++)
                     _alloc.construct(_vector + i, temp[i]);
                 for (size_type i = 0; i < _capacity; i++)
                     _alloc.destroy(temp + i);
@@ -239,7 +239,6 @@ namespace ft
                 _size = n;
             }
         }
-
         void push_back(const T &val)
         {
             if (_size + 1 > _capacity)
@@ -256,6 +255,89 @@ namespace ft
             _vector[_size] = val;
             _size++;
         };
+        void pop_back()
+        {
+            _alloc.destroy(_vector + _size);
+            _size--;
+        }
+        iterator insert (iterator pos, const value_type& val)
+        {
+            size_t index = pos - this->begin();
+            iterator end = iterator(_vector + _size);
+
+            if (_size + 1 > _capacity)
+            {
+                T *temp = _vector;
+                _vector = _alloc.allocate(_size + 1);
+                for (size_type i = 0; i < index; i++)
+                    _alloc.construct(_vector + i, temp[i]);
+                _alloc.construct(_vector + index, val);
+                for (size_type i = index; i < _size; i++)
+                    _alloc.construct(_vector + i + 1, temp[i]);
+                for (size_type i = 0; i < _capacity; i++)
+                    _alloc.destroy(temp + i);   
+                _alloc.deallocate(temp, _capacity);
+                _capacity++;
+            }
+            else
+            {
+                T temp;
+                T temp2;
+
+                temp = *pos;
+                *pos = val;
+                while (pos != end)
+                {
+                    pos++;
+                    temp2 = *pos;
+                    *pos = temp;
+                    temp = temp2;
+                }
+            }
+            _size++;
+            return (this->begin() + index);
+        }
+        iterator insert(iterator pos, size_type count, const T& val)
+        {
+            size_t index = pos - this->begin();
+            // iterator end = iterator(_vector + _size);
+
+            if (_size + count > _capacity)
+            {
+                T *temp = _vector;
+                _vector = _alloc.allocate(_size + count);
+                for (size_type i = 0; i < index; i++)
+                    _alloc.construct(_vector + i, temp[i]);
+                for (size_type i = 0; i < count; i++)
+                    _alloc.construct(_vector + index + i, val);
+                for (size_type i = index; i < _size; i++)
+                    _alloc.construct(_vector + i + count, temp[i]);
+                for (size_type i = 0; i < _capacity; i++)
+                    _alloc.destroy(temp + i);
+                _alloc.deallocate(temp, _capacity);
+                _capacity += count;
+            }
+            else
+            {
+                T *arr = new T[_size];
+
+	            for (size_t i = 0; i < _size; i++)
+		            arr[i] = _vector[i];
+                for (size_type i = 0; i < count; i++)
+                {
+                    *pos = val;
+                    pos++;
+                }
+                for (size_t i = 0; i < _size - index; i++)
+                {
+                    *pos = arr[index + i];
+                    pos++;
+                }
+                delete []arr;
+            }
+            _size += count;
+            return (this->begin() + index);
+        }
     };
 }
 

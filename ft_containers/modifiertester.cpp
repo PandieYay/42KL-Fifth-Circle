@@ -81,7 +81,6 @@ int main(void)
     cout << "resize tester\n";
     {
         ft::vector<int> g1;
-        // g1.reserve(100);
         for (int i = 5; i <= 7; i++)
             g1.push_back(i);
         g1.resize(2, 5);

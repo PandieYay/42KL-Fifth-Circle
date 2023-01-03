@@ -1,6 +1,7 @@
 NAME = ./a.out
 SRCS = ./test.cpp
 INC = ./vector.hpp ./functions.hpp ./iterators.hpp ./reverse_iterator.hpp
+TESTERRDIR = ./testers
 FLAGS = -Wall -Wextra -Werror -std=c++98
 
 all: $(NAME)
@@ -8,14 +9,14 @@ all: $(NAME)
 $(NAME): ${SRCS} ${INC}
 	c++ ${FLAGS} -o ${NAME} ${SRCS}
 
-iterators: ./iteratorstester.cpp ${INC}
-	c++ ${FLAGS} -o ${NAME} ./iteratorstester.cpp
+iterators: ${TESTERRDIR}/iteratorstester.cpp ${INC}
+	c++ ${FLAGS} -o ${NAME} ${TESTERRDIR}/iteratorstester.cpp
 
-capacity: ./capacitytester.cpp ${INC}
-	c++ ${FLAGS} -o ${NAME} ./capacitytester.cpp
+capacity: ${TESTERRDIR}/capacitytester.cpp ${INC}
+	c++ ${FLAGS} -o ${NAME} ${TESTERRDIR}/capacitytester.cpp
 
-modifier: ./modifiertester.cpp ${INC}
-	c++ ${FLAGS} -o ${NAME} ./modifiertester.cpp
+modifier: ${TESTERRDIR}/modifiertester.cpp ${INC}
+	c++ ${FLAGS} -o ${NAME} ${TESTERRDIR}/modifiertester.cpp
 
 clean:
 	rm -f ${NAME}

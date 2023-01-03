@@ -42,6 +42,51 @@ int main(void)
         for (size_t i = 0; i < g1.size(); i++)
             cout << g1[i];
         cout << "\nCapacity is " << g1.capacity() << "\n";
-    }    
+    }
+    cout << "Erase tester\n";
+    {
+        ft::vector<int> g1;
+        for (int i = 5; i <= 7; i++)
+            g1.push_back(i);
+        g1.erase(g1.end() - 1);
+        for (size_t i = 0; i < g1.size(); i++)
+            cout << g1[i];
+    }
+    cout << "\nErase tester range ver\n";
+    {
+        ft::vector<int> g1;
+        for (int i = 5; i <= 7; i++)
+            g1.push_back(i);
+        g1.erase(g1.begin(), g1.end() - 1);
+        for (size_t i = 0; i < g1.size(); i++)
+            cout << g1[i];
+    }
+    cout << "\nswap tester\n";
+    {
+        ft::vector<int> foo(3, 100); // three ints with a value of 100
+        ft::vector<int> bar(5, 200); // five ints with a value of 200
+
+        foo.swap(bar);
+
+        cout << "foo contains:";
+        for (unsigned i = 0; i < foo.size(); i++)
+            cout << ' ' << foo[i];
+        cout << '\n';
+
+        cout << "bar contains:";
+        for (unsigned i = 0; i < bar.size(); i++)
+            cout << ' ' << bar[i];
+        cout << '\n';
+    }
+    cout << "resize tester\n";
+    {
+        ft::vector<int> g1;
+        // g1.reserve(100);
+        for (int i = 5; i <= 7; i++)
+            g1.push_back(i);
+        g1.resize(2, 5);
+        for (size_t i = 0; i < g1.size(); i++)
+            cout << g1[i];
+    }
     // system("leaks a.out");
 }

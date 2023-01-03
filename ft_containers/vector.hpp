@@ -385,6 +385,76 @@ namespace ft
             _size += count;
             return (this->begin() + index);
         }
+        iterator erase(iterator pos)
+        {
+            size_t index = pos - this->begin();
+            while (pos != this->end() - 1)
+            {
+                *pos = *(pos + 1);
+                pos++;
+            }
+            _size--;
+            _alloc.destroy(_vector + _size);
+            return (this->begin() + index);
+        }
+        iterator erase (iterator first, iterator last)
+        {
+            size_t index = first - this->begin();
+            size_t distance = last - first;
+            size_t i = 0;
+
+            while (first != this->end() - 1)
+            {
+                *first = *(first + distance + i);
+                first++;
+                i++;
+            }
+            _size -= distance;
+            return (this->begin() + index);
+        }
+        void swap (vector& x)
+        {
+            vector temp = *this;
+            *this = x;
+            x = temp;
+        }
+        void clear()
+        {
+            for (size_t i = 0; i < _size; i++)
+               _alloc.destroy(_vector + i);
+            _size = 0;
+        }
+        void resize (size_type count, value_type val = value_type())
+        {
+            if (count > _capacity)
+            {
+                T *temp = _vector;
+                _vector = _alloc.allocate(count);
+                for (size_type i = 0; i < _size; i++)
+                    _alloc.construct(_vector + i, temp[i]);
+                for (size_type i = 0; i < count - _size; i++)
+                    _alloc.construct(_vector + _size + i, val);
+                for (size_type i = 0; i < _capacity; i++)
+                    _alloc.destroy(temp + i);
+                _alloc.deallocate(temp, _capacity);
+                _capacity = count;
+                _size = count;
+            }
+            else
+            {
+                if (count > _size)
+                {
+                    for (size_type i = 0; i < count - _size; i++)
+                        _alloc.construct(_vector + _size + i, val);
+                }
+                else
+                {
+                    for (size_type i = 0; i < _size - count; i++)
+                        this->pop_back();
+                }
+                _size = count;
+            }
+        }
     };
 }
 

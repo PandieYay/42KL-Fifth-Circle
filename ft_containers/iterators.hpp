@@ -51,13 +51,15 @@ namespace ft
         }
         vecIterator operator+(int other)
         {
-            p = p + other;
-            return *this;
+            vecIterator<T> temp = *this;
+            temp.p = p + other;
+            return (temp);
         }
         vecIterator operator-(int other)
         {
-            p = p - other;
-            return *this;
+            vecIterator<T> temp = *this;
+            temp.p = p - other;
+            return (temp);
         }
         size_t operator-(vecIterator other)
         {

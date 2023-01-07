@@ -1,6 +1,6 @@
 NAME = ./a.out
 SRCS = ./test.cpp
-INC = ./vector.hpp ./functions.hpp ./iterators.hpp ./reverse_iterator.hpp
+INC = ./vector.hpp ./functions.hpp ./iterators.hpp ./reverse_iterator.hpp ./stack.hpp
 TESTERRDIR = ./testers
 FLAGS = -Wall -Wextra -Werror -std=c++98
 
@@ -17,6 +17,9 @@ capacity: ${TESTERRDIR}/capacitytester.cpp ${INC}
 
 modifier: ${TESTERRDIR}/modifiertester.cpp ${INC}
 	c++ ${FLAGS} -o ${NAME} ${TESTERRDIR}/modifiertester.cpp
+
+stack: ${TESTERRDIR}/stacktester.cpp ${INC}
+	c++ ${FLAGS} -o ${NAME} ${TESTERRDIR}/stacktester.cpp
 
 clean:
 	rm -f ${NAME}

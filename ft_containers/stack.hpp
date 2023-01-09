@@ -13,11 +13,11 @@ namespace ft
         typedef T value_type;
         typedef size_t size_type;
 
-    private:
+    protected:
         Container c;
 
     public:
-        explicit stack(const container_type &cont = container_type()) { c = cont; }
+        explicit stack(const container_type &cont = container_type()) : c(cont) {}
 
         // Element access
         value_type &top(){ return (c.back()); }

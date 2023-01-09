@@ -24,6 +24,9 @@ stack: ${TESTERRDIR}/stacktester.cpp ${INC}
 pair: ${TESTERRDIR}/pairtester.cpp ${INC}
 	c++ ${FLAGS} -o ${NAME} ${TESTERRDIR}/pairtester.cpp
 
+map: ${TESTERRDIR}/maptester.cpp ${INC}
+	c++ ${FLAGS} -o ${NAME} ${TESTERRDIR}/maptester.cpp
+
 clean:
 	rm -f ${NAME}
 

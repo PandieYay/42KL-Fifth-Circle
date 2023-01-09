@@ -20,7 +20,7 @@ namespace ft
         explicit stack(const container_type &cont = container_type()) : c(cont) {}
 
         // Element access
-        value_type &top(){ return (c.back()); }
+        value_type &top() { return (c.back()); }
         const value_type &top() const { return (c.back()); }
 
         // Capacity
@@ -28,7 +28,7 @@ namespace ft
         size_type size() const { return (c.size()); }
 
         // Modifiers
-        void push (const value_type& val) { c.push_back(val); }
+        void push(const value_type &val) { c.push_back(val); }
         void pop() { c.pop_back(); }
     };
 }

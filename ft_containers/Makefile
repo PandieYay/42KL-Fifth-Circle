@@ -1,6 +1,6 @@
 NAME = ./a.out
 SRCS = ./test.cpp
-INC = ./vector.hpp ./functions.hpp ./iterators.hpp ./reverse_iterator.hpp ./stack.hpp
+INC = ./vector.hpp ./functions.hpp ./iterators.hpp ./reverse_iterator.hpp ./stack.hpp ./map.hpp
 TESTERRDIR = ./testers
 FLAGS = -Wall -Wextra -Werror -std=c++98
 
@@ -20,6 +20,9 @@ modifier: ${TESTERRDIR}/modifiertester.cpp ${INC}
 
 stack: ${TESTERRDIR}/stacktester.cpp ${INC}
 	c++ ${FLAGS} -o ${NAME} ${TESTERRDIR}/stacktester.cpp
+
+pair: ${TESTERRDIR}/pairtester.cpp ${INC}
+	c++ ${FLAGS} -o ${NAME} ${TESTERRDIR}/pairtester.cpp
 
 clean:
 	rm -f ${NAME}

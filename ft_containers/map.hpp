@@ -4,6 +4,7 @@
 #include <memory>
 #include <functional>
 #include "functions.hpp"
+#include <iostream>
 
 namespace ft
 {
@@ -29,7 +30,8 @@ namespace ft
         /// @brief Constructs an empty container, with no elements.
         explicit map(const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type()) : _key(comp), _alloc(alloc)
         {
-            _vector = NULL;
+            _vector = _alloc.allocate(1000);
+            _size = 0;
         }
         /// @brief Constructs a container with as many elements as the range [first,last),
         /// with each element constructed from its corresponding element in that range.
@@ -60,6 +62,19 @@ namespace ft
                 _size++;
             }
             return *this;
+        }
+
+        //Element Access
+        T &operator[](const Key &key)
+        {
+            // for (size_type i = 0; i < _size; i++)
+            // {
+
+            // }
+            std::cout << key<< "HIII\n";
+            // _vector[0].first = key;
+            _vector[0].second = 10;
+            return (_vector[0].second);
         }
     };
 }

@@ -1,7 +1,6 @@
 #include <utility>
 #include <string>
 #include <iostream>
-#include "../map.hpp"
 #include "../functions.hpp"
 
 int main()

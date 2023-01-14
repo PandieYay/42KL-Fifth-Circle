@@ -75,9 +75,9 @@ namespace ft
 
         // Constructors
         pair() : first(T1()), second(T2()){};
-        pair(const T1 &x, const T2 &y) { first = x; second = y; };
+        pair(const T1 &x, const T2 &y) :first(x), second(y) {};
         template<class U, class V>
-        pair (const pair<U,V> &pr) {first = pr.first; second = pr.second; };
+        pair (const pair<U,V> &pr) : first(pr.first), second(pr.second) {};
 
         // operator=
         pair &operator=(const pair& pr) {first = pr.first; second = pr.second; return *this; };

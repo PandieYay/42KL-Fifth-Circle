@@ -5,6 +5,7 @@
 #include <functional>
 #include "functions.hpp"
 #include <iostream>
+#include "redblacktree.hpp"
 
 namespace ft
 {
@@ -18,8 +19,11 @@ namespace ft
         typedef std::less<Key> key_compare;
         typedef Allocator allocator_type;
         typedef size_t size_type;
+        typedef std::iterator<std::random_access_iterator_tag, T> iterator;
 
     private:
+        node<value_type>  _head;
+        // node<value_type>  *_nill;
         value_type *_vector;
         key_compare _key;
         Allocator _alloc;
@@ -30,24 +34,25 @@ namespace ft
         /// @brief Constructs an empty container, with no elements.
         explicit map(const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type()) : _key(comp), _alloc(alloc)
         {
-            _vector = _alloc.allocate(1000);
             _size = 0;
         }
         /// @brief Constructs a container with as many elements as the range [first,last),
-        /// with each element constructed from its corresponding element in that range.
+        /// with each element constructed from its corresponding element in that range. W.I.P NEED TO TEST
         template <class InputIterator>
         map(typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last,
             const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type()) : _key(comp), _alloc(alloc)
         {
             size_type size = last - first;
-            _vector = _alloc.allocate(size);
             for (size_type i = 0; i < size; i++)
             {
-                _alloc.construct(_vector + i, *first);
+                _head.data = _alloc.allocate(1);
+                _alloc.construct(_head.data, *first);
                 first++;
             }
             _size = size;
         }
+        /// @brief Constructs a container with a copy of each of the elements in x, in the same order. NOT DONE
+        map (const map& x);
         /// @brief Copies all the elements from x into the container.
         map &operator=(const map &x)
         {
@@ -64,18 +69,26 @@ namespace ft
             return *this;
         }
 
-        //Element Access
+        // Element Access
         T &operator[](const Key &key)
         {
             // for (size_type i = 0; i < _size; i++)
             // {
 
             // }
-            std::cout << key<< "HIII\n";
-            // _vector[0].first = key;
-            _vector[0].second = 10;
-            return (_vector[0].second);
+            // _head.data = _alloc.allocate(1);
+            // _alloc.construct(_head.data, make_pair(char('a'),10));
+            std::cout << key << "| is the key\n";
+            return (_head.data->second);
         }
+
+        // Modifiers
+        void    insert (const value_type& val)
+        {
+            _head.data = _alloc.allocate(1);
+            _alloc.construct(_head.data, val);
+        }
+
     };
 }
 

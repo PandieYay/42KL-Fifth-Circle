@@ -11,7 +11,7 @@ int main(void)
     ft::map<char, int> first;
 
     first.insert(ft::make_pair('a', 10));
-    // first.insert(ft::make_pair('b', 10));
+    first.insert(ft::make_pair('b', 20000));
     // first['a'] = 10;
     // first['b'] = 30;
     // first['c'] = 50;

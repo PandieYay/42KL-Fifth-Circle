@@ -22,17 +22,18 @@ namespace ft
         typedef std::iterator<std::random_access_iterator_tag, T> iterator;
 
     private:
-        node<value_type>  _head;
+        node<value_type> _head;
         // node<value_type>  *_nill;
         value_type *_vector;
-        key_compare _key;
+        key_compare _compare;
         Allocator _alloc;
         size_type _size;
+        typedef typename Allocator::template rebind<node<value_type> >::other _nodealloc;
 
     public:
         // Constructors
         /// @brief Constructs an empty container, with no elements.
-        explicit map(const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type()) : _key(comp), _alloc(alloc)
+        explicit map(const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type()) : _compare(comp), _alloc(alloc)
         {
             _size = 0;
         }
@@ -40,7 +41,7 @@ namespace ft
         /// with each element constructed from its corresponding element in that range. W.I.P NEED TO TEST
         template <class InputIterator>
         map(typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last,
-            const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type()) : _key(comp), _alloc(alloc)
+            const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type()) : _compare(comp), _alloc(alloc)
         {
             size_type size = last - first;
             for (size_type i = 0; i < size; i++)
@@ -52,7 +53,7 @@ namespace ft
             _size = size;
         }
         /// @brief Constructs a container with a copy of each of the elements in x, in the same order. NOT DONE
-        map (const map& x);
+        map(const map &x);
         /// @brief Copies all the elements from x into the container.
         map &operator=(const map &x)
         {
@@ -83,12 +84,26 @@ namespace ft
         }
 
         // Modifiers
-        void    insert (const value_type& val)
+        void insert(const value_type &val)
         {
-            _head.data = _alloc.allocate(1);
-            _alloc.construct(_head.data, val);
+            if (_head.data == NULL)
+            {                
+                _head.data = _alloc.allocate(1);
+                _alloc.construct(_head.data, val);
+            }
+            else
+            {
+                if (_compare(_head.data->first, val.first) == true)
+                {
+                    if (_head.right == NULL)
+                    {
+                        _head.right = _nodealloc(_alloc).allocate(1);
+                        _head.right->data = _alloc.allocate(1);
+                        _alloc.construct(_head.right->data, val);
+                    }
+                }
+            }
         }
-
     };
 }
 

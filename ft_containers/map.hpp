@@ -79,8 +79,23 @@ namespace ft
             // }
             // _head.data = _alloc.allocate(1);
             // _alloc.construct(_head.data, make_pair(char('a'),10));
+            node<value_type> *temp;
+            temp = &_head;
             std::cout << key << "| is the key\n";
-            return (_head.data->second);
+            
+            // Checks right branches and finds key, returning T
+            while(temp != NULL)
+            {
+                std::cout << "In the loop bro\n";
+                if (key == temp->data->first)
+                    return (temp->data->second);
+                if (temp->right != NULL)
+                    temp = temp->right;
+                else
+                    break ;
+            }
+            std::cout << "while loop didn't work\n";
+            return (temp->data->second);
         }
 
         // Modifiers
@@ -100,6 +115,7 @@ namespace ft
                         _head.right = _nodealloc(_alloc).allocate(1);
                         _head.right->data = _alloc.allocate(1);
                         _alloc.construct(_head.right->data, val);
+                        _head.right->parent = &_head;
                     }
                 }
             }

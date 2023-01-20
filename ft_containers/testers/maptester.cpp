@@ -18,5 +18,5 @@ int main(void)
     // first['d'] = 70;
 
     // ft::map<char, int> second(first.begin(), first.end());
-    cout << first['a'];
+    cout << first['b'];
 }

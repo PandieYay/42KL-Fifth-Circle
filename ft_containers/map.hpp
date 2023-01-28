@@ -101,6 +101,9 @@ namespace ft
         // Modifiers
         void insert(const value_type &val)
         {
+            node<value_type> *temp;
+
+            temp = &_head;
             if (_head.data == NULL)
             {                
                 _head.data = _alloc.allocate(1);
@@ -108,14 +111,30 @@ namespace ft
             }
             else
             {
-                if (_compare(_head.data->first, val.first) == true)
+                // Inserted value key more than
+                while (_compare(temp->data->first, val.first) == true)
                 {
-                    if (_head.right == NULL)
+                    if (temp->right == NULL)
                     {
-                        _head.right = _nodealloc(_alloc).allocate(1);
-                        _head.right->data = _alloc.allocate(1);
-                        _alloc.construct(_head.right->data, val);
-                        _head.right->parent = &_head;
+                        temp->right = _nodealloc(_alloc).allocate(1);
+                        temp->right->data = _alloc.allocate(1);
+                        _alloc.construct(temp->right->data, val);
+                        temp->right->parent = &_head;
+                        return ;
+                    }
+                    temp = temp->right;
+                }
+                // Inserted value key is less than TODO NOT DONE YET
+                while (_compare(temp->data->first, val.first) == false)
+                {
+                    if (temp->left == NULL)
+                    {
+                        std::cout << "HIII I'M HERE";
+                        temp->left = _nodealloc(_alloc).allocate(1);
+                        temp->left->data = _alloc.allocate(1);
+                        _alloc.construct(temp->left->data, val);
+                        temp->left->parent = &_head;
+                        return ;
                     }
                 }
             }

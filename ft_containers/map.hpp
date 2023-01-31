@@ -84,17 +84,34 @@ namespace ft
             std::cout << key << "| is the key\n";
             
             // Checks right branches and finds key, returning T
-            while(temp != NULL)
+            // while(temp != NULL)
+            // {
+            //     std::cout << "In the loop bro\n";
+            //     if (key == temp->data->first)
+            //         return (temp->data->second);
+            //     if (temp->right != NULL)
+            //         temp = temp->right;
+            //     else
+            //         break ;
+            // }
+            while (_compare(temp->data->first, key) == true)
             {
-                std::cout << "In the loop bro\n";
                 if (key == temp->data->first)
                     return (temp->data->second);
-                if (temp->right != NULL)
-                    temp = temp->right;
-                else
-                    break ;
+                temp = temp->right;
             }
-            std::cout << "while loop didn't work\n";
+            while (_compare(temp->data->first, key) == false)
+            {
+                if (key == temp->data->first)
+                    return (temp->data->second);
+                temp = temp->left;
+            }
+            while (_compare(temp->data->first, key) == true)
+            {
+                if (key == temp->data->first)
+                    return (temp->data->second);
+                temp = temp->right;
+            }
             return (temp->data->second);
         }
 
@@ -129,13 +146,26 @@ namespace ft
                 {
                     if (temp->left == NULL)
                     {
-                        std::cout << "HIII I'M HERE";
+
                         temp->left = _nodealloc(_alloc).allocate(1);
                         temp->left->data = _alloc.allocate(1);
                         _alloc.construct(temp->left->data, val);
                         temp->left->parent = &_head;
                         return ;
                     }
+                    temp = temp->left;
+                }
+                while (_compare(temp->data->first, val.first) == true)
+                {
+                    if (temp->right == NULL)
+                    {
+                        temp->right = _nodealloc(_alloc).allocate(1);
+                        temp->right->data = _alloc.allocate(1);
+                        _alloc.construct(temp->right->data, val);
+                        temp->right->parent = &_head;
+                        return ;
+                    }
+                    temp = temp->right;
                 }
             }
         }

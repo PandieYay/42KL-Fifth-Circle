@@ -52,9 +52,60 @@ namespace ft
             }
             _size = size;
         }
-        /// @brief Constructs a container with a copy of each of the elements in x, in the same order. NOT DONE
-        map(const map &x);
-        /// @brief Copies all the elements from x into the container.
+        /// @brief Constructs a container with a copy of each of the elements in x, in the same order.
+        map(const map &x) : _compare(x._compare), _alloc(x._alloc), _size(x._size) {
+            node<value_type> *templeft = &_head;
+            node<value_type> *tempright = &_head;
+            const node<value_type> *tempxleft = &x._head;
+            const node<value_type> *tempxright = &x._head;
+
+            if (x._head.data != NULL)
+            {                
+                _head.data = _alloc.allocate(1);
+                _alloc.construct(_head.data, ft::make_pair(x._head.data->first, x._head.data->second));
+            }
+            //Fill left tree
+            while (tempxleft->left != NULL)
+            {
+                tempxleft = tempxleft->left;
+                templeft->left = _nodealloc(_alloc).allocate(1);
+                templeft->left->data = _alloc.allocate(1);
+                _alloc.construct(templeft->left->data, ft::make_pair(tempxleft->data->first, tempxleft->data->second));
+                templeft = templeft->left;
+                tempxright = tempxleft;
+                tempright = templeft;
+                while (tempxright->left != NULL)
+                {
+                    tempxright = tempxright->left;
+                    tempright->right = _nodealloc(_alloc).allocate(1);
+                    tempright->right->data = _alloc.allocate(1);
+                    _alloc.construct(tempright->right->data, ft::make_pair(tempxright->data->first, tempxright->data->second));
+                    tempright = tempright->right;
+                }
+            }
+            tempright = &_head;
+            tempxright = &x._head;
+            //Fill right tree
+            while (tempxright->right != NULL)
+            {
+                tempxright = tempxright->right;
+                tempright->right = _nodealloc(_alloc).allocate(1);
+                tempright->right->data = _alloc.allocate(1);
+                _alloc.construct(tempright->right->data, ft::make_pair(tempxright->data->first, tempxright->data->second));
+                tempright = tempright->right;
+                tempxleft = tempxright;
+                templeft = tempright;
+                while (tempxleft->left != NULL)
+                {
+                    tempxleft = tempxleft->left;
+                    templeft->left = _nodealloc(_alloc).allocate(1);
+                    templeft->left->data = _alloc.allocate(1);
+                    _alloc.construct(templeft->left->data, ft::make_pair(tempxleft->data->first, tempxleft->data->second));
+                    templeft = templeft->left;
+                }
+            }
+        }
+        /// @brief Copies all the elements from x into the container. NOT DONE
         map &operator=(const map &x)
         {
             for (size_type i = 0; i < _size; i++)
@@ -73,27 +124,10 @@ namespace ft
         // Element Access
         T &operator[](const Key &key)
         {
-            // for (size_type i = 0; i < _size; i++)
-            // {
-
-            // }
-            // _head.data = _alloc.allocate(1);
-            // _alloc.construct(_head.data, make_pair(char('a'),10));
             node<value_type> *temp;
             temp = &_head;
             std::cout << key << "| is the key\n";
             
-            // Checks right branches and finds key, returning T
-            // while(temp != NULL)
-            // {
-            //     std::cout << "In the loop bro\n";
-            //     if (key == temp->data->first)
-            //         return (temp->data->second);
-            //     if (temp->right != NULL)
-            //         temp = temp->right;
-            //     else
-            //         break ;
-            // }
             while (_compare(temp->data->first, key) == true)
             {
                 if (key == temp->data->first)
@@ -144,9 +178,11 @@ namespace ft
                 // Inserted value key is less than TODO NOT DONE YET
                 while (_compare(temp->data->first, val.first) == false)
                 {
+                    //If key is alr inside, do nothing.
+                    if (temp->data->first == val.first)
+                        return ;
                     if (temp->left == NULL)
                     {
-
                         temp->left = _nodealloc(_alloc).allocate(1);
                         temp->left->data = _alloc.allocate(1);
                         _alloc.construct(temp->left->data, val);

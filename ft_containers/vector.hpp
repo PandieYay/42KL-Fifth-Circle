@@ -81,6 +81,7 @@ namespace ft
             for (size_type i = 0; i < _capacity; i++)
                 _alloc.destroy(_vector + i);
             _alloc.deallocate(_vector, _capacity);
+            _alloc = x._alloc;
             _vector = _alloc.allocate(x._size);
             _capacity = x._size;
             _size = 0;
@@ -360,7 +361,6 @@ namespace ft
                     _alloc.construct(_vector + index + i, *first);
                     first++;
                 }
-                std::cout << "Index is " << index << std::endl;
                 for (size_type i = index; i < _size; i++)
                     _alloc.construct(_vector + i + count, temp[i]);
                 for (size_type i = 0; i < _capacity; i++)

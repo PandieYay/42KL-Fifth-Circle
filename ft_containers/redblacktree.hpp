@@ -30,6 +30,7 @@ class RedBlackTree
 {
   typedef Node<T> *NodePtr;
   typedef Compare key_compare;
+  typedef size_t size_type;
 private:
   NodePtr root;
   NodePtr TNULL;
@@ -186,7 +187,7 @@ private:
     v->parent = u->parent;
   }
 
-  void deleteNodeHelper(NodePtr node, Key key)
+  size_type deleteNodeHelper(NodePtr node, Key key)
   {
     NodePtr z = TNULL;
     NodePtr x, y;
@@ -210,7 +211,7 @@ private:
     if (z == TNULL)
     {
       cout << "Key not found in the tree" << endl;
-      return;
+      return (0);
     }
 
     y = z;
@@ -246,11 +247,14 @@ private:
       y->left->parent = y;
       y->color = z->color;
     }
-    delete z;
+    _alloc.deallocate(z->data, 1);
+    _nodealloc(_alloc).deallocate(z, 1);
     if (y_original_color == 0)
     {
       deleteFix(x);
     }
+    cout << "Deleted boom\n";
+    return (1);
   }
 
   // For balancing the tree after insertion
@@ -338,7 +342,7 @@ private:
 public:
   RedBlackTree()
   {
-    TNULL = new Node<T>;
+    TNULL = _nodealloc(_alloc).allocate(1);
     TNULL->color = 0;
     TNULL->left = nullptr;
     TNULL->right = nullptr;
@@ -526,9 +530,9 @@ public:
     return this->root;
   }
 
-  void deleteNode(int data)
+  size_type deleteNode(Key key)
   {
-    deleteNodeHelper(this->root, data);
+   return (deleteNodeHelper(this->root, key));
   }
 
   void printTree()

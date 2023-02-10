@@ -22,12 +22,12 @@ namespace ft
         typedef std::iterator<std::random_access_iterator_tag, T> iterator;
 
         class value_compare : std::binary_function<T, T, bool>
-        {   // in C++98, it is required to inherit binary_function<value_type,value_type,bool>
+        { // in C++98, it is required to inherit binary_function<value_type,value_type,bool>
         protected:
             key_compare _comp;
-            value_compare (const key_compare &c) : _comp(c) {}  // constructed with map's comparison object
+            value_compare(const key_compare &c) : _comp(c) {} // constructed with map's comparison object
         public:
-            bool operator() (const value_type& x, const value_type& y) const
+            bool operator()(const value_type &x, const value_type &y) const
             {
                 return _comp(x.first, y.first);
             }
@@ -56,14 +56,14 @@ namespace ft
         {
             (void)first;
             (void)last;
-        //     size_type size = last - first;
-        //     for (size_type i = 0; i < size; i++)
-        //     {
-        //         _head.data = _alloc.allocate(1);
-        //         _alloc.construct(_head.data, *first);
-        //         first++;
-        //     }
-        //     _size = size;
+            //     size_type size = last - first;
+            //     for (size_type i = 0; i < size; i++)
+            //     {
+            //         _head.data = _alloc.allocate(1);
+            //         _alloc.construct(_head.data, *first);
+            //         first++;
+            //     }
+            //     _size = size;
         }
         /// @brief Constructs a container with a copy of each of the elements in x, in the same order.
         map(const map &x) : _compare(x._compare), _alloc(x._alloc), _size(x._size)
@@ -75,13 +75,34 @@ namespace ft
         map &operator=(const map &x)
         {
             (void)x;
-            //TODO DEALLOC, then iterate and insert
+            // TODO DEALLOC, then iterate and insert
         }
 
         // Element Access
         T &operator[](const Key &key)
         {
             return (_rbt.searchTree(key)->data->second);
+        }
+
+        T &at(const Key &key)
+        {
+            Node<value_type> *node;
+
+            node = _rbt.searchTree(key);
+            if (node->left == nullptr && node->right == nullptr)
+                throw std::out_of_range("map::at: key not found");
+            else
+                return (node->data->second);
+        }
+        const T &at(const Key &key) const
+        {
+            Node<value_type> *node;
+
+            node = _rbt.searchTree(key);
+            if (node->left == nullptr && node->right == nullptr)
+                throw std::out_of_range("map::at: key not found");
+            else
+                return (node->data->second);
         }
 
         // Capacity
@@ -93,6 +114,16 @@ namespace ft
         {
             _rbt.insert(val);
             _size++;
+        }
+        size_type erase(const Key &key)
+        {
+            if (_rbt.deleteNode(key) == 1)
+            {
+                _size--;
+                return (1);
+            }
+            else
+                return (0);
         }
     };
 }

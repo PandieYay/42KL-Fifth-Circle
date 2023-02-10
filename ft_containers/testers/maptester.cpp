@@ -19,7 +19,7 @@ int main(void)
     ft::map<char, int> first;
 
     first.insert(ft::make_pair('a', 10));
-    // makemap();
+    std::cout << first.erase('a');
     // first.insert(ft::make_pair('b', 20000));
     // first.insert(ft::make_pair('c', 12323));
 
@@ -30,8 +30,7 @@ int main(void)
     // // first['d'] = 70;
 
     // // ft::map<char, int> second(first.begin(), first.end());
-    // cout << first['a'];
-    cout << first.max_size();
+    cout << first.at('a');
     // cout << first.size();
 
     // RedBlackTree<int, ft::pair<int, int> > bst;

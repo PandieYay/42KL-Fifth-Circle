@@ -82,15 +82,17 @@ namespace ft
         int &operator*() { return *p; }
     };
 
-    template <class T>
-    class mapIterator : public ft::iterator<ft::bidirectional_iterator_tag, T>
+    template <class value_type>
+    class mapIterator : public ft::iterator<ft::bidirectional_iterator_tag, value_type>
     {
+        typedef Node<value_type> *NodePtr;
+
     private:
-        T *p;
+        NodePtr p;
 
     public:
         mapIterator() : p(nullptr) {}
-        mapIterator(T *x) : p(x) {}
+        mapIterator(NodePtr x) : p(x) {}
         mapIterator(const mapIterator &x) : p(x.p) {}
         mapIterator &operator=(const mapIterator &x)
         {
@@ -99,7 +101,6 @@ namespace ft
         }
         mapIterator &operator++()
         {
-            ++p;
             return *this;
         }
         mapIterator operator++(int)
@@ -110,8 +111,8 @@ namespace ft
         }
         bool operator==(const mapIterator &rhs) const { return p == rhs.p; }
         bool operator!=(const mapIterator &rhs) const { return p != rhs.p; }
-        T   &operator*() { return *p; }
-        T* operator->() { return p; }
+        value_type &operator*() { return *p->data; }
+        value_type *operator->() { return p->data; }
     };
 }
 

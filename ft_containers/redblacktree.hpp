@@ -368,7 +368,7 @@ public:
     return searchTreeHelper(this->root, key);
   }
 
-  T *begin(void)
+  NodePtr begin(void)
   {
     NodePtr temp;
 
@@ -377,7 +377,7 @@ public:
     {
       temp = temp->left;
     }
-    return (temp->data);
+    return (temp);
   }
 
   NodePtr minimum(NodePtr node)

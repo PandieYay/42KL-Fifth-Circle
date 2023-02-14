@@ -6,6 +6,7 @@
 #include "functions.hpp"
 #include <iostream>
 #include "redblacktree.hpp"
+#include "iterators.hpp"
 
 namespace ft
 {
@@ -19,7 +20,8 @@ namespace ft
         typedef Compare key_compare;
         typedef Allocator allocator_type;
         typedef size_t size_type;
-        typedef std::iterator<std::random_access_iterator_tag, T> iterator;
+        typedef mapIterator<value_type> iterator;
+        // typedef mapIterator<value_type> &iterator_ref;
 
         class value_compare : std::binary_function<T, T, bool>
         { // in C++98, it is required to inherit binary_function<value_type,value_type,bool>
@@ -78,6 +80,14 @@ namespace ft
             // TODO DEALLOC, then iterate and insert
         }
 
+        //Iterators
+        iterator begin() { return (iterator(_rbt.begin())); }
+
+        // Capacity
+        bool empty() const { return (_size == 0); };
+        size_type size(void) const { return (_size); };
+        size_type max_size() const { return (_alloc.max_size()); };
+
         // Element Access
         T &operator[](const Key &key)
         {
@@ -105,10 +115,6 @@ namespace ft
                 return (node->data->second);
         }
 
-        // Capacity
-        bool empty() const { return (_size == 0); };
-        size_type size(void) const { return (_size); };
-        size_type max_size() const { return (_alloc.max_size()); };
         // Modifiers
         void insert(const value_type &val)
         {

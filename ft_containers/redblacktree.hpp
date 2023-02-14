@@ -28,7 +28,7 @@ struct Node
 template <class T, class Key, class Compare, class Allocator>
 class RedBlackTree
 {
-  typedef Node<T> *NodePtr;
+  typedef Node<T>* NodePtr;
   typedef Compare key_compare;
   typedef size_t size_type;
 private:
@@ -253,7 +253,6 @@ private:
     {
       deleteFix(x);
     }
-    cout << "Deleted boom\n";
     return (1);
   }
 
@@ -367,6 +366,18 @@ public:
   NodePtr searchTree(const Key &key)
   {
     return searchTreeHelper(this->root, key);
+  }
+
+  T *begin(void)
+  {
+    NodePtr temp;
+
+    temp = root;
+    while (temp->left != TNULL)
+    {
+      temp = temp->left;
+    }
+    return (temp->data);
   }
 
   NodePtr minimum(NodePtr node)

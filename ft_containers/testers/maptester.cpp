@@ -1,4 +1,5 @@
 #include "../map.hpp"
+#include "../vector.hpp"
 #include <map>
 #include <string>
 #include <iostream>
@@ -9,29 +10,46 @@ using std::cout;
 
 // void makemap(void)
 // {
-//     ft::map<char, int> first;
+//     ft::map<char, int> my;
 
 //     first.insert(ft::make_pair('a', 10));
 // }
 
 int main(void)
 {
-    ft::map<char, int> first;
+    ft::map<char, int> my;
+    ft::map<char, int>::iterator mit;
+    std::map<char, int> theirs;
 
-    first.insert(ft::make_pair('a', 10));
-    std::cout << first.erase('a');
-    // first.insert(ft::make_pair('b', 20000));
-    // first.insert(ft::make_pair('c', 12323));
+    my.insert(ft::make_pair('a', 10));
+    my.insert(ft::make_pair('b', 10));
+    theirs.insert(std::make_pair('a', 10));
+    // cout << my.erase('a');
+    // my.insert(ft::make_pair('b', 20000));
+    // my.insert(ft::make_pair('c', 12323));
 
-    // ft::map<char, int> second(first);
-    // // first['a'] = 10;
-    // // first['b'] = 30;
-    // // first['c'] = 50;
-    // // first['d'] = 70;
+    // ft::map<char, int> second(my);
+    // // my['a'] = 10;
+    // // my['b'] = 30;
+    // // my['c'] = 50;
+    // // my['d'] = 70;
 
-    // // ft::map<char, int> second(first.begin(), first.end());
-    cout << first.at('a');
-    // cout << first.size();
+    // // ft::map<char, int> second(my.begin(), my.end());
+
+    mit = my.begin();
+    cout << mit->first << endl; // output
+    mit++;
+    cout << mit->first << endl; // output
+    // cout << reinterpret_cast<void *>(my.begin()) << "\n";
+    // printf("%p\n", reinterpret_cast<void *>(my.begin()));
+    // cout << theirs.begin()->second;
+    //inline ft::mapIterator<ft::pair<const char, int>> ft::map<char, int>::begin()
+    // inline std::__1::map<char, int>::iterator std::__1::map<char, int>::begin() noexcept
+
+    
+
+    // cout << my.at('a');
+    // cout << my.size();
 
     // RedBlackTree<int, ft::pair<int, int> > bst;
     // bst.insert(ft::make_pair(55, 10));

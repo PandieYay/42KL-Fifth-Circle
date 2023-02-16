@@ -40,7 +40,7 @@ private:
 
   void initializeNULLNode(NodePtr node, NodePtr parent)
   {
-    node->data = 0;
+    node->data = nullptr;
     node->parent = parent;
     node->left = nullptr;
     node->right = nullptr;
@@ -345,6 +345,7 @@ public:
     TNULL->color = 0;
     TNULL->left = nullptr;
     TNULL->right = nullptr;
+    TNULL->data = nullptr;
     root = TNULL;
   }
 
@@ -377,6 +378,20 @@ public:
     {
       temp = temp->left;
     }
+    return (temp);
+  }
+
+  NodePtr end(void)
+  {
+    NodePtr temp;
+
+    temp = root;
+    while (temp->right != TNULL)
+    {
+      temp = temp->right;
+    }
+    temp->right->parent = temp;
+    temp = temp->right;
     return (temp);
   }
 

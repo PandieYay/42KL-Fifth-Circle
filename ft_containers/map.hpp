@@ -81,7 +81,8 @@ namespace ft
         }
 
         //Iterators
-        iterator begin() { return (iterator(_rbt.begin())); }
+        iterator begin() {  return (iterator(_rbt.begin())); }
+        iterator end() { return (iterator(_rbt.end())); }
 
         // Capacity
         bool empty() const { return (_size == 0); };

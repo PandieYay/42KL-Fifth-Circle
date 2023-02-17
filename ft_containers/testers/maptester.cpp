@@ -41,8 +41,6 @@ int main(void)
     // // my['c'] = 50;
     // // my['d'] = 70;
 
-    // // ft::map<char, int> second(my.begin(), my.end());
-
     mit = my.begin();
     cout << mit->first << endl; // output
     mit++;
@@ -78,6 +76,10 @@ int main(void)
     mit--;
     cout << mit->first << endl;
     mit--;
+
+    ft::map<int, int> copy(my.begin(), my.end());
+    for (ft::map<int,int>::iterator it=copy.begin(); it!=copy.end(); ++it)
+        std::cout << it->first << " => " << it->second << '\n';
 
     // tit = theirs.begin();
     // cout << tit->first << endl;

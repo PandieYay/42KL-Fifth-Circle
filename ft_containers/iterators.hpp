@@ -101,22 +101,6 @@ namespace ft
         }
         mapIterator &operator++()
         {
-            // if (p->right->data)
-            // {
-            //     p = p->right;
-            //     while (p->left->data)
-            //         p = p->left;
-            // }
-            // else
-            // {
-            //     NodePtr temp = p->parent;
-            //     while(temp->data && p == temp->right)
-            //     {
-            //         p = temp;
-            //         temp = temp->parent;
-            //     }
-            //     p = temp;
-            // }
             if (p->right->data == nullptr)
             {
                 NodePtr temp = p->parent;
@@ -187,6 +171,12 @@ namespace ft
             operator--();
             return tmp;
         }
+        // size_t operator-(mapIterator other)
+        // {
+        //     size_t distance = p - other.p;
+        //     std::cout << "Distance is " << distance << "yes\n";
+        //     return distance;
+        // }
         bool operator==(const mapIterator &rhs) const { return p == rhs.p; }
         bool operator!=(const mapIterator &rhs) const { return p != rhs.p; }
         value_type &operator*() { return *p->data; }

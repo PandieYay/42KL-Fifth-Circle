@@ -56,16 +56,12 @@ namespace ft
         map(typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last,
             const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type()) : _compare(comp), _alloc(alloc)
         {
-            (void)first;
-            (void)last;
-            //     size_type size = last - first;
-            //     for (size_type i = 0; i < size; i++)
-            //     {
-            //         _head.data = _alloc.allocate(1);
-            //         _alloc.construct(_head.data, *first);
-            //         first++;
-            //     }
-            //     _size = size;
+            _size = 0;
+                for ( ; first != last; first++)
+                {
+                    _rbt.insert(*first);
+                    _size++;
+                }
         }
         /// @brief Constructs a container with a copy of each of the elements in x, in the same order.
         map(const map &x) : _compare(x._compare), _alloc(x._alloc), _size(x._size)

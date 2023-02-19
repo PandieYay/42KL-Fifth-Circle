@@ -369,7 +369,7 @@ public:
     return searchTreeHelper(this->root, key);
   }
 
-  NodePtr begin(void)
+  NodePtr begin(void) const
   {
     NodePtr temp;
 
@@ -381,7 +381,7 @@ public:
     return (temp);
   }
 
-  NodePtr end(void)
+  NodePtr end(void) const
   {
     NodePtr temp;
 

@@ -6,7 +6,7 @@
 #include "functions.hpp"
 #include <iostream>
 #include "redblacktree.hpp"
-#include "iterators.hpp"
+#include "mapIterator.hpp"
 
 namespace ft
 {
@@ -21,6 +21,7 @@ namespace ft
         typedef Allocator allocator_type;
         typedef size_t size_type;
         typedef mapIterator<value_type> iterator;
+        typedef mapIterator<value_type> const_iterator;
         // typedef mapIterator<value_type> &iterator_ref;
 
         class value_compare : std::binary_function<T, T, bool>
@@ -57,7 +58,7 @@ namespace ft
             const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type()) : _compare(comp), _alloc(alloc)
         {
             _size = 0;
-                for ( ; first != last; first++)
+                for ( ; first != last; ++first)
                 {
                     _rbt.insert(*first);
                     _size++;
@@ -66,8 +67,8 @@ namespace ft
         /// @brief Constructs a container with a copy of each of the elements in x, in the same order.
         map(const map &x) : _compare(x._compare), _alloc(x._alloc), _size(x._size)
         {
-            (void)x;
-            // Iterate and insert?
+            for (const_iterator first = x.begin(); first != x.end(); ++first)
+                _rbt.insert(*first);
         }
         /// @brief Copies all the elements from x into the container. NOT DONE
         map &operator=(const map &x)
@@ -77,8 +78,10 @@ namespace ft
         }
 
         //Iterators
-        iterator begin() {  return (iterator(_rbt.begin())); }
+        iterator begin() { return (iterator(_rbt.begin())); }
+        const_iterator begin() const { return (const_iterator(_rbt.begin())); }
         iterator end() { return (iterator(_rbt.end())); }
+        const_iterator end() const { return (const_iterator(_rbt.end())); }
 
         // Capacity
         bool empty() const { return (_size == 0); };

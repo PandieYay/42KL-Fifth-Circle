@@ -17,4 +17,5 @@ int main(void)
     cout << *(g1.rbegin()) << std::endl;
     cout << *(g1.rbegin() + 1) << std::endl;
     cout << *(g1.rend());
+    ft::vector<int> copyVec2(g1);
 }

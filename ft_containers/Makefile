@@ -1,6 +1,6 @@
 NAME = ./a.out
 SRCS = ./test.cpp
-INC = ./vector.hpp ./functions.hpp ./iterators.hpp ./reverse_iterator.hpp ./stack.hpp ./map.hpp
+INC = ./vector.hpp ./functions.hpp ./iterators.hpp ./reverse_iterator.hpp ./stack.hpp ./map.hpp ./redblacktree.hpp
 TESTERRDIR = ./testers
 FLAGS = -Wall -Wextra -Werror -std=c++98
 

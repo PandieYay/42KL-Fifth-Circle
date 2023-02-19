@@ -1,5 +1,4 @@
 #include "../map.hpp"
-#include "../vector.hpp"
 #include <map>
 #include <string>
 #include <iostream>
@@ -77,10 +76,15 @@ int main(void)
     cout << mit->first << endl;
     mit--;
 
-    ft::map<int, int> copy(my.begin(), my.end());
-    for (ft::map<int,int>::iterator it=copy.begin(); it!=copy.end(); ++it)
+    //Testing range constructor 
+    ft::map<int, int> rangecopy(my.begin(), my.end());
+    for (ft::map<int,int>::iterator it=rangecopy.begin(); it!=rangecopy.end(); ++it)
         std::cout << it->first << " => " << it->second << '\n';
 
+    std::cout << "Now testing copy constructor\n";
+    ft::map<int, int> copy(rangecopy);
+    for (ft::map<int,int>::iterator it=copy.begin(); it!=copy.end(); ++it)
+        std::cout << it->first << " => " << it->second << '\n';
     // tit = theirs.begin();
     // cout << tit->first << endl;
     // cout << tit->first << endl;

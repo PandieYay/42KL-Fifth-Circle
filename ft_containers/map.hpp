@@ -7,6 +7,7 @@
 #include <iostream>
 #include "redblacktree.hpp"
 #include "mapIterator.hpp"
+#include "reverse_iterator.hpp"
 
 namespace ft
 {
@@ -22,7 +23,7 @@ namespace ft
         typedef size_t size_type;
         typedef mapIterator<value_type> iterator;
         typedef mapIterator<value_type> const_iterator;
-        // typedef mapIterator<value_type> &iterator_ref;
+        typedef reverse_iterator<iterator> reverse_iterator;
 
         class value_compare : std::binary_function<T, T, bool>
         { // in C++98, it is required to inherit binary_function<value_type,value_type,bool>
@@ -82,10 +83,16 @@ namespace ft
                 _rbt.insert(*first);
             return *this;
         }
+        // Destructor
         ~map()
         {
             for (size_type i = 0; i < _size; ++i)
                 _rbt.deleteNode(_rbt.begin()->data->first);
+        }
+        // Allocator
+        allocator_type get_allocator() const
+        {
+            return (_alloc);
         }
 
         //Iterators
@@ -93,6 +100,8 @@ namespace ft
         const_iterator begin() const { return (const_iterator(_rbt.begin())); }
         iterator end() { return (iterator(_rbt.end())); }
         const_iterator end() const { return (const_iterator(_rbt.end())); }
+        reverse_iterator rbegin() { return (reverse_iterator(--iterator(_rbt.end()))); };
+        reverse_iterator rend() { return (reverse_iterator(--iterator(_rbt.begin()))); };
 
         // Capacity
         bool empty() const { return (_size == 0); };

@@ -76,31 +76,32 @@ int main(void)
     cout << mit->first << endl;
     mit--;
 
-    //Testing range constructor 
+    // Testing range constructor
     ft::map<int, int> rangecopy(my.begin(), my.end());
-    for (ft::map<int,int>::iterator it=rangecopy.begin(); it!=rangecopy.end(); ++it)
+    for (ft::map<int, int>::iterator it = rangecopy.begin(); it != rangecopy.end(); ++it)
         std::cout << it->first << " => " << it->second << '\n';
 
     std::cout << "Now testing copy constructor\n";
     ft::map<int, int> copy(rangecopy);
-    for (ft::map<int,int>::iterator it=copy.begin(); it!=copy.end(); ++it)
+    for (ft::map<int, int>::iterator it = copy.begin(); it != copy.end(); ++it)
         std::cout << it->first << " => " << it->second << '\n';
 
     ft::map<int, int> equalcopy;
     std::cout << "Now testing equal constructor\n";
     equalcopy = copy;
-    for (ft::map<int,int>::iterator it=equalcopy.begin(); it!=equalcopy.end(); ++it)
+    for (ft::map<int, int>::iterator it = equalcopy.begin(); it != equalcopy.end(); ++it)
         std::cout << it->first << " => " << it->second << '\n';
+    for (ft::map<int, int>::reverse_iterator rit = equalcopy.rbegin(); rit != equalcopy.rend(); ++rit)
+        std::cout << rit->first << " => " << rit->second << '\n';
+
     // tit = theirs.begin();
     // cout << tit->first << endl;
     // cout << tit->first << endl;
     // cout << reinterpret_cast<void *>(my.begin()) << "\n";
     // printf("%p\n", reinterpret_cast<void *>(my.begin()));
     // cout << theirs.begin()->second;
-    //inline ft::mapIterator<ft::pair<const char, int>> ft::map<char, int>::begin()
+    // inline ft::mapIterator<ft::pair<const char, int>> ft::map<char, int>::begin()
     // inline std::__1::map<char, int>::iterator std::__1::map<char, int>::begin() noexcept
-
-    
 
     // cout << my.at('a');
     // cout << my.size();

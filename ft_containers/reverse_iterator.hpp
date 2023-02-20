@@ -1,8 +1,7 @@
 #ifndef REVERSE_ITERATOR_HPP
 #define REVERSE_ITERATOR_HPP
 
-#include "vector.hpp"
-#include "iterators.hpp"
+#include "iterator_traits.hpp"
 
 namespace ft
 {
@@ -11,9 +10,13 @@ namespace ft
     {
     protected:
         typedef Iterator iterator_type;
+        typedef typename iterator_traits<Iterator>::value_type value_type;
+        typedef typename iterator_traits<Iterator>::pointer pointer;
+        typedef typename iterator_traits<Iterator>::reference reference;
         Iterator It;
 
     public:
+        reverse_iterator() : It(nullptr) {}
         explicit reverse_iterator(const iterator_type x) : It(x){};
         reverse_iterator &operator++()
         {
@@ -47,7 +50,13 @@ namespace ft
             It = It + other;
             return *this;
         }
-        int &operator*() { return (*It); }
+        bool operator==(const reverse_iterator &rhs) const { return (It == rhs.It); }
+        bool operator!=(const reverse_iterator &rhs) const { return (It != rhs.It); }
+        reference operator*() const {
+            iterator_type temp = It;
+            return (*temp);
+        }
+        pointer operator->() const { return &(operator*()); }
     };
 }
 

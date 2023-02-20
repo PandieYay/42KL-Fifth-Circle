@@ -73,8 +73,19 @@ namespace ft
         /// @brief Copies all the elements from x into the container. NOT DONE
         map &operator=(const map &x)
         {
-            (void)x;
-            // TODO DEALLOC, then iterate and insert
+            for (size_type i = 0; i < _size; ++i)
+                _rbt.deleteNode(_rbt.begin()->data->first);
+            _compare = x._compare;
+            _alloc = x._alloc;
+            _size = x._size;            
+            for (const_iterator first = x.begin(); first != x.end(); ++first)
+                _rbt.insert(*first);
+            return *this;
+        }
+        ~map()
+        {
+            for (size_type i = 0; i < _size; ++i)
+                _rbt.deleteNode(_rbt.begin()->data->first);
         }
 
         //Iterators

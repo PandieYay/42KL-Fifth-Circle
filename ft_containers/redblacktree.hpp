@@ -349,6 +349,11 @@ public:
     root = TNULL;
   }
 
+  ~RedBlackTree()
+  {
+    _nodealloc(_alloc).deallocate(root, 1);
+  }
+
   void preorder()
   {
     preOrderHelper(this->root);

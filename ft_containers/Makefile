@@ -27,6 +27,9 @@ pair: ${TESTERRDIR}/pairtester.cpp ${INC}
 map: ${TESTERRDIR}/maptester.cpp ${INC}
 	c++ ${FLAGS} -o ${NAME} ${TESTERRDIR}/maptester.cpp
 
+mapleak: ${TESTERRDIR}/maptester.cpp ${INC}
+	c++ ${FLAGS} -o ${NAME} ${TESTERRDIR}/mapleaktester.cpp
+
 clean:
 	rm -f ${NAME}
 

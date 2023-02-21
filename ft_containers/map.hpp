@@ -23,7 +23,8 @@ namespace ft
         typedef size_t size_type;
         typedef mapIterator<value_type> iterator;
         typedef mapIterator<value_type> const_iterator;
-        typedef reverse_iterator<iterator> reverse_iterator;
+        typedef ft::reverse_iterator<iterator> reverse_iterator;
+        typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
         class value_compare : std::binary_function<T, T, bool>
         { // in C++98, it is required to inherit binary_function<value_type,value_type,bool>
@@ -101,7 +102,9 @@ namespace ft
         iterator end() { return (iterator(_rbt.end())); }
         const_iterator end() const { return (const_iterator(_rbt.end())); }
         reverse_iterator rbegin() { return (reverse_iterator(--iterator(_rbt.end()))); };
+        const_reverse_iterator rbegin() const { return (const_reverse_iterator(--iterator(_rbt.end()))); };
         reverse_iterator rend() { return (reverse_iterator(--iterator(_rbt.begin()))); };
+        const_reverse_iterator rend() const { return (const_reverse_iterator(--iterator(_rbt.begin()))); };
 
         // Capacity
         bool empty() const { return (_size == 0); };
@@ -111,7 +114,16 @@ namespace ft
         // Element Access
         T &operator[](const Key &key)
         {
-            return (_rbt.searchTree(key)->data->second);
+            Node<value_type> *node;
+
+            node = _rbt.searchTree(key);
+            if (node->left == nullptr && node->right == nullptr)
+            {
+                _rbt.insert(ft::make_pair(key, T()));
+                ++_size;
+                node = _rbt.searchTree(key);
+            }
+            return (node->data->second);
         }
 
         T &at(const Key &key)

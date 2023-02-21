@@ -9,7 +9,7 @@ using std::cout;
 
 // void makemap(void)
 // {
-//     ft::map<char, int> my;
+//     std::map<char, int> my;
 
 //     first.insert(ft::make_pair('a', 10));
 // }
@@ -18,8 +18,6 @@ int main(void)
 {
     ft::map<int, int> my;
     ft::map<int, int>::iterator mit;
-    std::map<char, int> theirs;
-    std::map<char, int>::iterator tit;
 
     my.insert(ft::make_pair(5, 10));
     my.insert(ft::make_pair(10, 20));
@@ -28,17 +26,6 @@ int main(void)
     my.insert(ft::make_pair(17, 37));
     my.insert(ft::make_pair(16, 37));
     my.insert(ft::make_pair(14, 37));
-    theirs.insert(std::make_pair('a', 10));
-    theirs.insert(std::make_pair('a', 10));
-    // cout << my.erase('a');
-    // my.insert(ft::make_pair('b', 20000));
-    // my.insert(ft::make_pair('c', 12323));
-
-    // ft::map<char, int> second(my);
-    // // my['a'] = 10;
-    // // my['b'] = 30;
-    // // my['c'] = 50;
-    // // my['d'] = 70;
 
     mit = my.begin();
     cout << mit->first << endl; // output
@@ -74,7 +61,6 @@ int main(void)
     cout << mit->first << endl;
     mit--;
     cout << mit->first << endl;
-    mit--;
 
     // Testing range constructor
     ft::map<int, int> rangecopy(my.begin(), my.end());
@@ -91,17 +77,30 @@ int main(void)
     equalcopy = copy;
     for (ft::map<int, int>::iterator it = equalcopy.begin(); it != equalcopy.end(); ++it)
         std::cout << it->first << " => " << it->second << '\n';
+    std::cout << "Now testing reverse constructor\n";
     for (ft::map<int, int>::reverse_iterator rit = equalcopy.rbegin(); rit != equalcopy.rend(); ++rit)
         std::cout << rit->first << " => " << rit->second << '\n';
+    cout << equalcopy.at(20) << endl;
 
+    std::cout << "Now testing [] element access\n";
+    ft::map<char, string> mymap;
+
+    mymap['a']="an element";
+    mymap['b']="another element";
+    mymap['c']=mymap['b'];
+
+    std::cout << "mymap['a'] is " << mymap['a'] << '\n';
+    std::cout << "mymap['b'] is " << mymap['b'] << '\n';
+    std::cout << "mymap['c'] is " << mymap['c'] << '\n';
+    std::cout << "mymap['d'] is " << mymap['d'] << '\n';
+
+    std::cout << "mymap now contains " << mymap.size() << " elements.\n";
     // tit = theirs.begin();
     // cout << tit->first << endl;
     // cout << tit->first << endl;
     // cout << reinterpret_cast<void *>(my.begin()) << "\n";
     // printf("%p\n", reinterpret_cast<void *>(my.begin()));
     // cout << theirs.begin()->second;
-    // inline ft::mapIterator<ft::pair<const char, int>> ft::map<char, int>::begin()
-    // inline std::__1::map<char, int>::iterator std::__1::map<char, int>::begin() noexcept
 
     // cout << my.at('a');
     // cout << my.size();

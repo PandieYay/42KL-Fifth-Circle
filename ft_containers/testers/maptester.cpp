@@ -95,6 +95,11 @@ int main(void)
     std::cout << "mymap['d'] is " << mymap['d'] << '\n';
 
     std::cout << "mymap now contains " << mymap.size() << " elements.\n";
+
+    mymap.insert(ft::make_pair('a', "TEST"));
+    std::cout << "mymap['a'] is " << mymap['a'] << '\n';
+    mymap.erase(mymap.begin());
+    std::cout << "mymap['a'] is " << mymap['a'] << '\n';
     // tit = theirs.begin();
     // cout << tit->first << endl;
     // cout << tit->first << endl;

@@ -42,7 +42,7 @@ namespace ft
         RedBlackTree<value_type, Key, Compare, Allocator> _rbt;
         value_type *_vector;
         key_compare _compare;
-        value_compare value_comp() const;
+        value_compare _value_comp() const;
         Allocator _alloc;
         size_type _size;
 
@@ -148,21 +148,87 @@ namespace ft
         }
 
         // Modifiers
-        void insert(const value_type &val)
+        pair<iterator, bool> insert(const value_type &val)
         {
-            _rbt.insert(val);
-            _size++;
+            Node<value_type> *node;
+
+            node = _rbt.searchTree(val.first);
+            if (node->left == nullptr && node->right == nullptr)
+            {
+                _rbt.insert(val);
+                _size++;
+                return (ft::make_pair(iterator(_rbt.searchTree(val.first)), true));
+            }
+            return (ft::make_pair(iterator(node), false));
+        }
+        iterator insert (iterator position, const value_type& val)
+        {
+            (void)position;
+            Node<value_type> *node;
+
+            node = _rbt.searchTree(val.first);
+            if (node->left == nullptr && node->right == nullptr)
+            {
+                _rbt.insert(val);
+                _size++;
+                return (iterator(_rbt.searchTree(val.first)));
+            }
+            return (iterator(node));
+        }
+        template <class InputIterator>
+        void insert (InputIterator first, InputIterator last)
+        {
+            Node<value_type> *node;
+
+            for ( ; first != last; ++first)
+            {
+                node = _rbt.searchTree(first->first);
+                if (node->left == nullptr && node->right == nullptr)
+                {
+                    _rbt.insert(*first);
+                    _size++;
+                }
+            }
+        }
+        void erase (iterator position)
+        {
+            if (_rbt.deleteNode(position->first) == 1)
+                --_size;
         }
         size_type erase(const Key &key)
         {
             if (_rbt.deleteNode(key) == 1)
             {
-                _size--;
+                --_size;
                 return (1);
             }
             else
                 return (0);
         }
+        void erase (iterator first, iterator last)
+        {
+            for ( ; first != last; ++first)
+            {
+                if (_rbt.deleteNode(first->first) == 1)
+                    --_size;
+            }
+        }
+        void swap (map &x)
+        {
+            map temp = *this;
+            *this = x;
+            x = temp;
+        }
+        void clear()
+        {
+            for (size_type i = 0; i < _size; ++i)
+                _rbt.deleteNode(_rbt.begin()->data->first);
+            _size = 0;
+        }
+
+        //Observers
+        key_compare key_comp() const { return (_compare); }
+        value_compare value_comp() const { return (_value_comp); }
     };
 }
 

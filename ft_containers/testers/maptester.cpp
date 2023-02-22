@@ -100,6 +100,20 @@ int main(void)
     std::cout << "mymap['a'] is " << mymap['a'] << '\n';
     mymap.erase(mymap.begin());
     std::cout << "mymap['a'] is " << mymap['a'] << '\n';
+
+    cout << mymap.find('c')->second;
+
+    cout << mymap.lower_bound('b')->first;
+    cout << mymap.upper_bound('c')->first << endl;
+
+    ft::pair<ft::map<char, string>::iterator, ft::map<char, string>::iterator> ret;
+    ret = mymap.equal_range('b');
+
+    std::cout << "lower bound points to: ";
+    std::cout << ret.first->first << " => " << ret.first->second << '\n';
+
+    std::cout << "upper bound points to: ";
+    std::cout << ret.second->first << " => " << ret.second->second << '\n';
     // tit = theirs.begin();
     // cout << tit->first << endl;
     // cout << tit->first << endl;

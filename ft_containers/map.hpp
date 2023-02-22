@@ -60,11 +60,11 @@ namespace ft
             const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type()) : _compare(comp), _alloc(alloc)
         {
             _size = 0;
-                for ( ; first != last; ++first)
-                {
-                    _rbt.insert(*first);
-                    _size++;
-                }
+            for (; first != last; ++first)
+            {
+                _rbt.insert(*first);
+                _size++;
+            }
         }
         /// @brief Constructs a container with a copy of each of the elements in x, in the same order.
         map(const map &x) : _compare(x._compare), _alloc(x._alloc), _size(x._size)
@@ -79,7 +79,7 @@ namespace ft
                 _rbt.deleteNode(_rbt.begin()->data->first);
             _compare = x._compare;
             _alloc = x._alloc;
-            _size = x._size;            
+            _size = x._size;
             for (const_iterator first = x.begin(); first != x.end(); ++first)
                 _rbt.insert(*first);
             return *this;
@@ -96,7 +96,7 @@ namespace ft
             return (_alloc);
         }
 
-        //Iterators
+        // Iterators
         iterator begin() { return (iterator(_rbt.begin())); }
         const_iterator begin() const { return (const_iterator(_rbt.begin())); }
         iterator end() { return (iterator(_rbt.end())); }
@@ -161,7 +161,7 @@ namespace ft
             }
             return (ft::make_pair(iterator(node), false));
         }
-        iterator insert (iterator position, const value_type& val)
+        iterator insert(iterator position, const value_type &val)
         {
             (void)position;
             Node<value_type> *node;
@@ -176,11 +176,11 @@ namespace ft
             return (iterator(node));
         }
         template <class InputIterator>
-        void insert (InputIterator first, InputIterator last)
+        void insert(InputIterator first, InputIterator last)
         {
             Node<value_type> *node;
 
-            for ( ; first != last; ++first)
+            for (; first != last; ++first)
             {
                 node = _rbt.searchTree(first->first);
                 if (node->left == nullptr && node->right == nullptr)
@@ -190,7 +190,7 @@ namespace ft
                 }
             }
         }
-        void erase (iterator position)
+        void erase(iterator position)
         {
             if (_rbt.deleteNode(position->first) == 1)
                 --_size;
@@ -205,15 +205,15 @@ namespace ft
             else
                 return (0);
         }
-        void erase (iterator first, iterator last)
+        void erase(iterator first, iterator last)
         {
-            for ( ; first != last; ++first)
+            for (; first != last; ++first)
             {
                 if (_rbt.deleteNode(first->first) == 1)
                     --_size;
             }
         }
-        void swap (map &x)
+        void swap(map &x)
         {
             map temp = *this;
             *this = x;
@@ -226,9 +226,92 @@ namespace ft
             _size = 0;
         }
 
-        //Observers
+        // Observers
         key_compare key_comp() const { return (_compare); }
         value_compare value_comp() const { return (_value_comp); }
+
+        // Operations
+        iterator find(const Key &key)
+        {
+            Node<value_type> *node;
+
+            node = _rbt.searchTree(key);
+            if (node->left == nullptr && node->right == nullptr)
+                return (this->end());
+            return (iterator(node));
+        }
+        const_iterator find(const Key &key) const
+        {
+            Node<value_type> *node;
+
+            node = _rbt.searchTree(key);
+            if (node->left == nullptr && node->right == nullptr)
+                return (this->end());
+            return (const_iterator(node));
+        }
+        size_type count(const Key &key) const
+        {
+            Node<value_type> *node;
+
+            node = _rbt.searchTree(key);
+            if (node->left == nullptr && node->right == nullptr)
+                return (0);
+            return (1);
+        }
+        iterator lower_bound(const Key &key)
+        {
+            for (iterator it = this->begin(); it != this->end(); ++it)
+            {
+                if (_compare(it->first, key) == false)
+                    return (it);
+            }
+            return this->end();
+        }
+        const_iterator lower_bound(const Key &key) const
+        {
+            for (const_iterator it = this->begin(); it != this->end(); ++it)
+            {
+                if (_compare(it->first, key) == false)
+                    return (it);
+            }
+            return this->end();
+        }
+        iterator upper_bound(const Key &key)
+        {
+            for (iterator it = this->begin(); it != this->end(); ++it)
+            {
+                if (_compare(key, it->first) == true)
+                    return (it);
+            }
+            return this->end();
+        }
+        const_iterator upper_bound(const Key &key) const
+        {
+            for (const_iterator it = this->begin(); it != this->end(); ++it)
+            {
+                if (_compare(key, it->first) == true)
+                    return (it);
+            }
+            return this->end();
+        }
+        pair<iterator, iterator> equal_range(const Key &key)
+        {
+            Node<value_type> *node;
+
+            node = _rbt.searchTree(key);
+            if (node->left == nullptr && node->right == nullptr)
+                return (ft::make_pair(this->end(), this->end()));
+            return (ft::make_pair(this->lower_bound(key), this->upper_bound(key)));
+        }
+        pair<const_iterator, const_iterator> equal_range(const Key &key) const
+        {
+            Node<value_type> *node;
+
+            node = _rbt.searchTree(key);
+            if (node->left == nullptr && node->right == nullptr)
+                return (ft::make_pair(this->end(), this->end()));
+            return (ft::make_pair(this->lower_bound(key), this->upper_bound(key)));
+        }
     };
 }
 

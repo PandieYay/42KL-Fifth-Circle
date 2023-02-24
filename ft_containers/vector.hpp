@@ -406,22 +406,25 @@ namespace ft
         {
             size_t index = first - this->begin();
             size_t distance = last - first;
-            size_t i = 0;
 
             while (first != this->end() - 1)
             {
-                *first = *(first + distance + i);
+                *first = *(first + distance);
                 first++;
-                i++;
             }
-            _size -= distance;
+            for (size_t i = 0; i < distance; ++i)
+            {
+                _size--;
+                _alloc.destroy(_vector + _size);
+            }
             return (this->begin() + index);
         }
         void swap(vector &x)
         {
-            vector temp = *this;
-            *this = x;
-            x = temp;
+            std::swap(_vector, x._vector);
+            std::swap(_size, x._size);
+            std::swap(_capacity, x._capacity);
+            std::swap(_alloc, x._alloc);
         }
         void clear()
         {

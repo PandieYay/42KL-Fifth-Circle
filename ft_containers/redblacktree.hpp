@@ -5,7 +5,9 @@
 #include "map.hpp"
 #include "functions.hpp"
 #include <iostream>
-using namespace std;
+using std::string;
+using std::cout;
+using std::endl;
 
 template <class T>
 struct Node
@@ -17,15 +19,7 @@ struct Node
   int color;
 };
 
-// std::less(1,2) == 1
-
-// value_compare(<1,"test">, <2,"test">)
-
-// if val < node.data
-
-// value_compare()
-
-template <class T, class Key, class Compare, class Allocator>
+template <class T, class Key, class Compare, class Allocator = std::allocator<T> >
 class RedBlackTree
 {
   typedef Node<T>* NodePtr;
@@ -80,7 +74,7 @@ private:
     }
   }
 
-  NodePtr searchTreeHelper(NodePtr node, Key key)
+  NodePtr searchTreeHelper(NodePtr node, Key key) const
   {
     if (node == TNULL || key == node->data->first)
     {
@@ -194,25 +188,15 @@ private:
     while (node != TNULL)
     {
       if (node->data->first == key)
-      {
         z = node;
-      }
-
       if (node->data->first <= key)
-      {
         node = node->right;
-      }
       else
-      {
         node = node->left;
-      }
     }
 
     if (z == TNULL)
-    {
-      cout << "Key not found in the tree" << endl;
       return (0);
-    }
 
     y = z;
     int y_original_color = y->color;
@@ -369,7 +353,7 @@ public:
     postOrderHelper(this->root);
   }
 
-  NodePtr searchTree(const Key &key)
+  NodePtr searchTree(const Key &key) const
   {
     return searchTreeHelper(this->root, key);
   }
@@ -379,6 +363,8 @@ public:
     NodePtr temp;
 
     temp = root;
+    if (temp == TNULL)
+      return (temp);
     while (temp->left != TNULL)
     {
       temp = temp->left;
@@ -390,6 +376,8 @@ public:
   {
     NodePtr temp;
 
+    if (root == TNULL)
+      return (root);
     temp = root;
     while (temp->right != TNULL)
     {
@@ -573,6 +561,15 @@ public:
       printHelper(this->root, "", true);
     }
   }
+
+  void swap(RedBlackTree &x)
+  {
+    std::swap(root, x.root);
+    std::swap(TNULL, x.TNULL);
+    std::swap(_compare, x._compare);
+    std::swap(_alloc, x._alloc);
+  }
+
 };
 
 #endif

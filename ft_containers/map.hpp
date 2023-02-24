@@ -26,12 +26,13 @@ namespace ft
         typedef ft::reverse_iterator<iterator> reverse_iterator;
         typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
+    private:
         class value_compare : std::binary_function<T, T, bool>
         { // in C++98, it is required to inherit binary_function<value_type,value_type,bool>
         protected:
             key_compare _comp;
-            value_compare(const key_compare &c) : _comp(c) {} // constructed with map's comparison object
         public:
+            value_compare(const key_compare &c) : _comp(c) {} // constructed with map's comparison object
             bool operator()(const value_type &x, const value_type &y) const
             {
                 return _comp(x.first, y.first);
@@ -42,14 +43,14 @@ namespace ft
         RedBlackTree<value_type, Key, Compare, Allocator> _rbt;
         value_type *_vector;
         key_compare _compare;
-        value_compare _value_comp() const;
+        value_compare _value_compare;
         Allocator _alloc;
         size_type _size;
 
     public:
         // Constructors
         /// @brief Constructs an empty container, with no elements.
-        explicit map(const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type()) : _compare(comp), _alloc(alloc)
+        explicit map(const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type()) : _compare(comp), _value_compare(key_compare()), _alloc(alloc)
         {
             _size = 0;
         }
@@ -57,7 +58,7 @@ namespace ft
         /// with each element constructed from its corresponding element in that range. W.I.P NEED TO TEST
         template <class InputIterator>
         map(typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type first, InputIterator last,
-            const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type()) : _compare(comp), _alloc(alloc)
+            const key_compare &comp = key_compare(), const allocator_type &alloc = allocator_type()) : _compare(comp), _value_compare(key_compare()), _alloc(alloc)
         {
             _size = 0;
             for (; first != last; ++first)
@@ -67,7 +68,7 @@ namespace ft
             }
         }
         /// @brief Constructs a container with a copy of each of the elements in x, in the same order.
-        map(const map &x) : _compare(x._compare), _alloc(x._alloc), _size(x._size)
+        map(const map &x) : _compare(x._compare), _value_compare(x._value_compare),  _alloc(x._alloc), _size(x._size)
         {
             for (const_iterator first = x.begin(); first != x.end(); ++first)
                 _rbt.insert(*first);
@@ -207,17 +208,20 @@ namespace ft
         }
         void erase(iterator first, iterator last)
         {
-            for (; first != last; ++first)
+            while (first != last)
             {
-                if (_rbt.deleteNode(first->first) == 1)
+                if (_rbt.deleteNode((first++)->first) == 1)
                     --_size;
             }
         }
         void swap(map &x)
         {
-            map temp = *this;
-            *this = x;
-            x = temp;
+            std::swap(_vector, x._vector);
+            std::swap(_compare, x._compare);
+            std::swap(_value_compare, x._value_compare);
+            std::swap(_alloc, x._alloc);
+            std::swap(_size, x._size);
+            _rbt.swap(x._rbt);
         }
         void clear()
         {
@@ -228,7 +232,7 @@ namespace ft
 
         // Observers
         key_compare key_comp() const { return (_compare); }
-        value_compare value_comp() const { return (_value_comp); }
+        value_compare value_comp() const { return (_value_compare); }
 
         // Operations
         iterator find(const Key &key)
@@ -296,21 +300,11 @@ namespace ft
         }
         pair<iterator, iterator> equal_range(const Key &key)
         {
-            Node<value_type> *node;
-
-            node = _rbt.searchTree(key);
-            if (node->left == nullptr && node->right == nullptr)
-                return (ft::make_pair(this->end(), this->end()));
-            return (ft::make_pair(this->lower_bound(key), this->upper_bound(key)));
+            return (ft::make_pair(lower_bound(key), upper_bound(key)));
         }
         pair<const_iterator, const_iterator> equal_range(const Key &key) const
         {
-            Node<value_type> *node;
-
-            node = _rbt.searchTree(key);
-            if (node->left == nullptr && node->right == nullptr)
-                return (ft::make_pair(this->end(), this->end()));
-            return (ft::make_pair(this->lower_bound(key), this->upper_bound(key)));
+            return (ft::make_pair(lower_bound(key), upper_bound(key)));
         }
     };
     // Non-member functions

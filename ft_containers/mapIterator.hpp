@@ -6,19 +6,22 @@
 
 namespace ft
 {
-    template <class value_type>
-    class mapIterator : public ft::iterator<ft::bidirectional_iterator_tag, value_type>
+    template <class T>
+    struct mapIterator : public ft::iterator<ft::bidirectional_iterator_tag, T>
     {
-        typedef Node<value_type> *NodePtr;
+        typedef T       value_type;
+        typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::iterator_category iterator_category;
+        typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::difference_type difference_type;
+        typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::pointer pointer;
+        typedef typename ft::iterator<ft::bidirectional_iterator_tag, T>::reference reference;
 
-    private:
+        typedef Node<value_type> *NodePtr;
         NodePtr p;
 
-    public:
         mapIterator() : p(nullptr) {}
         mapIterator(NodePtr x) : p(x) {}
-        mapIterator(const mapIterator &x) : p(x.p) {}
-        mapIterator &operator=(const mapIterator &x)
+        mapIterator(const mapIterator<typename std::remove_const<T>::type> &x) : p(x.p) {}
+        mapIterator &operator=(const mapIterator<typename std::remove_const<T>::type> &x)
         {
             p = x.p;
             return *this;
@@ -28,6 +31,15 @@ namespace ft
             if (p->right->data == nullptr)
             {
                 NodePtr temp = p->parent;
+                if (temp == nullptr)
+                {
+                    while (p->right->data != nullptr)
+                        p = p->right;
+                    // p = temp;
+                    p->right->parent = p;
+                    p = p->right;
+                    return *this;
+                }
                 while (temp->data != nullptr && p == temp->right)
                 {
                     p = p->parent;
@@ -97,8 +109,8 @@ namespace ft
         }
         bool operator==(const mapIterator &rhs) const { return p == rhs.p; }
         bool operator!=(const mapIterator &rhs) const { return p != rhs.p; }
-        value_type &operator*() { return *p->data; }
-        value_type *operator->() { return p->data; }
+        value_type   &operator*() const { return *p->data; }
+        value_type   *operator->() const { return p->data; }
     };
 }
 

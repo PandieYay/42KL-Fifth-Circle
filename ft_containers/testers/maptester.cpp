@@ -114,6 +114,13 @@ int main(void)
 
     std::cout << "upper bound points to: ";
     std::cout << ret.second->first << " => " << ret.second->second << '\n';
+
+	ft::map<int, int> mp;
+	ft::map<int, int>::iterator it = mp.begin();
+	// ft::map<int, int>::const_iterator cit = mp.begin();
+
+	ft::map<int, int>::reverse_iterator rit(it);
+    (void)it;
     // tit = theirs.begin();
     // cout << tit->first << endl;
     // cout << tit->first << endl;

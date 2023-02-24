@@ -9,7 +9,6 @@ namespace ft
     class reverse_iterator
     {
     protected:
-        typedef Iterator iterator_type;
         typedef typename iterator_traits<Iterator>::value_type value_type;
         typedef typename iterator_traits<Iterator>::pointer pointer;
         typedef typename iterator_traits<Iterator>::reference reference;
@@ -17,7 +16,7 @@ namespace ft
 
     public:
         reverse_iterator() : It(nullptr) {}
-        explicit reverse_iterator(const iterator_type x) : It(x){};
+        explicit reverse_iterator(const Iterator x) : It(x){};
         reverse_iterator &operator++()
         {
             --It;
@@ -53,10 +52,11 @@ namespace ft
         bool operator==(const reverse_iterator &rhs) const { return (It == rhs.It); }
         bool operator!=(const reverse_iterator &rhs) const { return (It != rhs.It); }
         reference operator*() const {
-            iterator_type temp = It;
+            Iterator temp = It;
             return (*temp);
         }
         pointer operator->() const { return &(operator*()); }
+        Iterator base(void) const {return It;}
     };
 }
 

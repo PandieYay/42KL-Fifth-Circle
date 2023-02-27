@@ -247,16 +247,21 @@ namespace ft
         }
         void push_back(const T &val)
         {
-            if (_size + 1 > _capacity)
+            if (_capacity == 0)
+            {
+                _vector = _alloc.allocate(2);
+                _capacity = 2;
+            }
+            else if (_size + 1 > _capacity)
             {
                 T *temp = _vector;
-                _vector = _alloc.allocate(_size + 1);
-                for (size_type i = 0; i < _capacity; i++)
+                _vector = _alloc.allocate(_capacity * 2);
+                for (size_type i = 0; i < _size; i++)
                     _alloc.construct(_vector + i, temp[i]);
-                for (size_type i = 0; i < _capacity; i++)
+                for (size_type i = 0; i < _size; i++)
                     _alloc.destroy(temp + i);
                 _alloc.deallocate(temp, _capacity);
-                _capacity++;
+                _capacity *= 2;
             }
             _vector[_size] = val;
             _size++;

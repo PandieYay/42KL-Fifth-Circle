@@ -3,4 +3,13 @@ services:
   web:
     build: NGINX/
     ports:
-      - 80:80
+      - "80:80"
+  db:
+    build: mariaDB/
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/foo
+
+volumes:
+  db:

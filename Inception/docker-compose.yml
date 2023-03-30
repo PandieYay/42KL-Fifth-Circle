@@ -1,15 +1,38 @@
 version: '3'
 services:
   web:
+    depends_on:
+      - db
+      - wordpress
     build: NGINX/
     ports:
       - "80:80"
+    volumes:
+      - wordpress:/test2
+    networks:
+      - frontend
+
+  wordpress:
+    build: wordpress/
+    volumes:
+      - wordpress:/test
+    networks:
+      - frontend
+      - backend
+
   db:
     build: mariaDB/
     ports:
       - "3306:3306"
     volumes:
-      - db-data:/foo
+      - db:/foo
+    networks:
+      - backend
+
+networks:
+  frontend:
+  backend:
 
 volumes:
   db:
+  wordpress:

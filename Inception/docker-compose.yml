@@ -8,14 +8,14 @@ services:
     ports:
       - "80:80"
     volumes:
-      - wordpress:/test2
+      - files:/var/www/html
     networks:
       - frontend
 
   wordpress:
     build: wordpress/
     volumes:
-      - wordpress:/test
+      - files:/var/www/html
     networks:
       - frontend
       - backend
@@ -35,4 +35,4 @@ networks:
 
 volumes:
   db:
-  wordpress:
+  files:

@@ -19,6 +19,8 @@ services:
     networks:
       - frontend
       - backend
+    expose:
+      - "9000"
 
   db:
     build: mariaDB/

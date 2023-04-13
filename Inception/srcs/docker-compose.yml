@@ -1,10 +1,11 @@
 version: '3'
 services:
-  web:
+  nginx:
     depends_on:
       - db
       - wordpress
-    build: NGINX/
+    container_name: inception_nginx
+    build: requirements/NGINX/
     ports:
       - "80:80"
     volumes:
@@ -13,7 +14,8 @@ services:
       - frontend
 
   wordpress:
-    build: wordpress/
+    container_name: inception_wp
+    build: requirements/wordpress/
     volumes:
       - files:/var/www/html
     networks:
@@ -23,13 +25,14 @@ services:
       - "9000"
 
   db:
-    build: mariaDB/
-    ports:
-      - "3306:3306"
+    container_name: inception_db
+    build: requirements/mariaDB/
     volumes:
       - db:/foo
     networks:
       - backend
+    expose:
+      - "3306"
 
 networks:
   frontend:

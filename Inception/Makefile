@@ -1,8 +1,12 @@
 all:
-	docker-compose up
+	cd srcs && docker-compose build
+	cd srcs && docker-compose up
 
 clean:
-	rm -f
+	cd srcs && docker-compose down
+	docker volume prune -f
+	docker image prune -f
+	docker container prune -f
 
 fclean: clean
 

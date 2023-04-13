@@ -59,7 +59,7 @@ server {
               # With php-fpm (or other unix sockets):
         #       fastcgi_pass unix:/run/php/php7.3-fpm.sock;
               # With php-cgi (or other tcp sockets):
-              fastcgi_pass inception_wordpress_1:9000;
+              fastcgi_pass inception_wp:9000;
         #       fastcgi_index index.php; #index file to server
         }
 

@@ -1,7 +1,16 @@
-#WHY NEED TO MKDIR FOR IT TO WORK
-# mkdir -p /run/mysqld
-# chown -R mysql:mysql /run/mysqld
+echo "USE mysql;
+FLUSH PRIVILEGES;
+ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';
+DELETE FROM mysql.user WHERE User='';
+DROP DATABASE IF EXISTS test;
+DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
+CREATE DATABASE $WORDPRESS_DATABASE;
+CREATE USER '$MYSQL_ADMIN'@'localhost' IDENTIFIED BY '$MYSQL_ADMIN_PASSWORD';
+GRANT ALL PRIVILEGES ON $WORDPRESS_DATABASE.* TO '$MYSQL_ADMIN'@'localhost' IDENTIFIED BY '$MYSQL_ADMIN_PASSWORD';
+GRANT ALL PRIVILEGES ON $WORDPRESS_DATABASE.* TO '$MYSQL_ADMIN'@'%' IDENTIFIED BY '$MYSQL_ADMIN_PASSWORD';
+CREATE USER '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_USER_PASSWORD';
+FLUSH PRIVILEGES;" > temp.sql;
 
-echo "Sleeping"
-# exec mysqld --user=mysql --console
+mysql_install_db --user=mysql
+mysqld --user=mysql --bootstrap < temp.sql
 mysqld_safe

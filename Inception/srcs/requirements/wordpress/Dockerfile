@@ -3,7 +3,7 @@ FROM debian:buster
 #install php and wordpress
 RUN apt update && apt upgrade -y
 RUN apt install -y wget
-RUN apt install -y php-fpm
+RUN apt install -y php-fpm php-mysql
 RUN cd /tmp && wget https://wordpress.org/latest.tar.gz && tar -xvf latest.tar.gz
 
 COPY wp-setup.sh /tmp

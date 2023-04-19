@@ -33,6 +33,8 @@ services:
       - backend
     expose:
       - "3306"
+    env_file:
+      - .env
 
 networks:
   frontend:

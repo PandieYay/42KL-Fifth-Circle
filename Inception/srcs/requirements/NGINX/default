@@ -19,12 +19,13 @@
 # Default server configuration
 #
 server {
-        listen 80 default_server;
-        listen [::]:80 default_server;
+        listen 443 ssl default_server;
+        listen [::]:443 ssl default_server;
 
+        include snippets/self-signed.conf;
+        include snippets/ssl-params.conf;
         # SSL configuration
         #
-        # listen 443 ssl default_server;
         # listen [::]:443 ssl default_server;
         #
         # Note: You should disable gzip for SSL traffic.
@@ -55,10 +56,6 @@ server {
         #
         location ~ \.php$ {
               include snippets/fastcgi-php.conf;
-        
-              # With php-fpm (or other unix sockets):
-        #       fastcgi_pass unix:/run/php/php7.3-fpm.sock;
-              # With php-cgi (or other tcp sockets):
               fastcgi_pass inception_wp:9000;
         #       fastcgi_index index.php; #index file to server
         }
@@ -71,6 +68,14 @@ server {
         #}
 }
 
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    server_name localhost;
+
+    return 301 https://$server_name$request_uri;
+}
 
 # Virtual Host configuration for example.com
 #

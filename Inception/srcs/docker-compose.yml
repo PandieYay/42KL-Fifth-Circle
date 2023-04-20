@@ -8,6 +8,7 @@ services:
     build: requirements/NGINX/
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - files:/var/www/html
     networks:

@@ -4,6 +4,6 @@ FROM debian:buster
 RUN apt update && apt upgrade -y
 RUN apt install -y redis-server
 
-COPY redis-setup.sh /tmp
+COPY redis.conf /etc/redis/redis.conf
 
-CMD [ "bash", "/tmp/redis-setup.sh"]
+CMD [ "redis-server", "--protected-mode no"]

@@ -4,11 +4,11 @@ all:
 
 clean:
 	cd srcs && docker-compose down
-	docker volume prune -f
-	docker image prune -f
-	docker container prune -f
 
 fclean: clean
+	docker system prune -f
+	rm -rf /Users/edlim/data/db/*
+	rm -rf /Users/edlim/data/wordpress/*
 
 re: fclean all
 

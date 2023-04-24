@@ -24,6 +24,8 @@ services:
       - backend
     expose:
       - "9000"
+    env_file:
+     - .env
 
   db:
     container_name: inception_db

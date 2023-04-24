@@ -13,4 +13,4 @@ FLUSH PRIVILEGES;" > temp.sql;
 
 mysql_install_db --user=mysql
 mysqld --user=mysql --bootstrap < temp.sql
-mysqld_safe
+mysqld_safe --user=mysql

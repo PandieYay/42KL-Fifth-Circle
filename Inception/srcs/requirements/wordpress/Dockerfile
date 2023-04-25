@@ -15,4 +15,4 @@ COPY wp-setup.sh /tmp
 COPY wp-config.php /tmp
 COPY www.conf /etc/php/7.3/fpm/pool.d/www.conf
 
-CMD [ "bash", "/tmp/wp-setup.sh"]
+CMD ["bash", "/tmp/wp-setup.sh"]

@@ -47,6 +47,19 @@ services:
     networks:
       - backend
 
+  ftp:
+    container_name: inception_ftp
+    build: requirements/bonus/ftp
+    volumes:
+      - files:/var/www/html
+    networks:
+      - backend
+    env_file:
+      - .env
+    expose:
+      - "20"
+      - "21"
+
 networks:
   frontend:
   backend:

@@ -6,6 +6,7 @@ clean:
 	cd srcs && docker-compose down
 
 fclean: clean
+	docker volume prune -f
 	docker system prune -f
 	rm -rf /Users/edlim/data/db/*
 	rm -rf /Users/edlim/data/wordpress/*

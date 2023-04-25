@@ -6,4 +6,4 @@ RUN apt install -y redis-server
 
 COPY redis.conf /etc/redis/redis.conf
 
-CMD [ "redis-server", "--protected-mode no"]
+CMD ["redis-server", "--protected-mode no"]

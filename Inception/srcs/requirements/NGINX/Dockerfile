@@ -13,4 +13,4 @@ COPY ssl-params.conf /etc/nginx/snippets/
 COPY nginx.conf /etc/nginx
 COPY default /etc/nginx/sites-available/default
 
-CMD [ "nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]

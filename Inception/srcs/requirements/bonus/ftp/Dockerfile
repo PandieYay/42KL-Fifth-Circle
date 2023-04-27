@@ -8,4 +8,3 @@ COPY ftp-setup.sh /tmp
 COPY vsftpd.conf /etc/vsftpd.conf
 
 CMD ["bash", "/tmp/ftp-setup.sh"]
-# CMD ["/usr/sbin/vsftpd"]

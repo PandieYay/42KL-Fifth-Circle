@@ -60,6 +60,16 @@ services:
       - "20"
       - "21"
 
+  adminer:
+    container_name: inception_adminer
+    build: requirements/bonus/adminer
+    depends_on:
+      - db
+    volumes:
+      - files:/var/www/html
+    networks:
+      - backend
+
 networks:
   frontend:
   backend:

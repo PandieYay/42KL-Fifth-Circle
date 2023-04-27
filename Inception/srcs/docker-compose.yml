@@ -13,6 +13,7 @@ services:
       - files:/var/www/html
     networks:
       - frontend
+    restart : on-failure
 
   wordpress:
     container_name: inception_wp
@@ -26,6 +27,7 @@ services:
       - "9000"
     env_file:
      - .env
+    restart : on-failure
 
   db:
     container_name: inception_db
@@ -38,7 +40,8 @@ services:
       - "3306"
     env_file:
       - .env
-  
+    restart : on-failure
+
   redis:
     container_name: inception_redis
     build: requirements/bonus/redis
@@ -46,6 +49,7 @@ services:
       - "6379"
     networks:
       - backend
+    restart : on-failure
 
   ftp:
     container_name: inception_ftp
@@ -59,6 +63,7 @@ services:
     expose:
       - "20"
       - "21"
+    restart : on-failure
 
   adminer:
     container_name: inception_adminer
@@ -69,6 +74,17 @@ services:
       - files:/var/www/html
     networks:
       - backend
+    restart : on-failure
+
+  static:
+    container_name: inception_static
+    build: requirements/bonus/static
+    volumes:
+      - files:/var/www/html
+    networks:
+      - frontend
+      - backend
+    restart : on-failure
 
 networks:
   frontend:

@@ -11,6 +11,7 @@ cd /var/www/html
 
 # Admin user
 wp core install --url=$DOMAIN_NAME --title=Inception --admin_name=$MYSQL_ADMIN --admin_password=$MYSQL_ADMIN_PASSWORD --admin_email=$MYSQL_ADMIN@gmail.com --allow-root
+wp user create $WP_USER $WP_USER@gmail.com --user_pass=$WP_USER_PASSWORD --role=author --allow-root
 
 # Installing redis plugin
 wp config set WP_REDIS_HOST redis --allow-root

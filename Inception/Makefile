@@ -1,9 +1,9 @@
 all:
-	cd srcs && docker-compose build
-	cd srcs && docker-compose up
+	docker-compose -f srcs/docker-compose.yml build
+	docker-compose -f srcs/docker-compose.yml up
 
 clean:
-	cd srcs && docker-compose down
+	docker-compose -f srcs/docker-compose.yml down
 
 fclean: clean
 	docker volume prune -f
